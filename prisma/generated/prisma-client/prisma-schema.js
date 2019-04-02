@@ -3,23 +3,587 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateUser {
+/* GraphQL */ `enum ActivityType {
+  CAMP
+  CLASS
+}
+
+type AggregateAMActivity {
   count: Int!
+}
+
+type AggregateFieldTrip {
+  count: Int!
+}
+
+type AggregateStudent {
+  count: Int!
+}
+
+type AggregateStudentSchedule {
+  count: Int!
+}
+
+type AggregateSummerSchedule {
+  count: Int!
+}
+
+type AggregateUser {
+  count: Int!
+}
+
+type AggregateWeek {
+  count: Int!
+}
+
+type AMActivity {
+  id: ID!
+  ages: String
+  desc: String
+  price: Int!
+  title: String!
+  type: ActivityType!
+}
+
+type AMActivityConnection {
+  pageInfo: PageInfo!
+  edges: [AMActivityEdge]!
+  aggregate: AggregateAMActivity!
+}
+
+input AMActivityCreateInput {
+  ages: String
+  desc: String
+  price: Int
+  title: String!
+  type: ActivityType
+}
+
+input AMActivityCreateManyInput {
+  create: [AMActivityCreateInput!]
+  connect: [AMActivityWhereUniqueInput!]
+}
+
+type AMActivityEdge {
+  node: AMActivity!
+  cursor: String!
+}
+
+enum AMActivityOrderByInput {
+  id_ASC
+  id_DESC
+  ages_ASC
+  ages_DESC
+  desc_ASC
+  desc_DESC
+  price_ASC
+  price_DESC
+  title_ASC
+  title_DESC
+  type_ASC
+  type_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type AMActivityPreviousValues {
+  id: ID!
+  ages: String
+  desc: String
+  price: Int!
+  title: String!
+  type: ActivityType!
+}
+
+input AMActivityScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  ages: String
+  ages_not: String
+  ages_in: [String!]
+  ages_not_in: [String!]
+  ages_lt: String
+  ages_lte: String
+  ages_gt: String
+  ages_gte: String
+  ages_contains: String
+  ages_not_contains: String
+  ages_starts_with: String
+  ages_not_starts_with: String
+  ages_ends_with: String
+  ages_not_ends_with: String
+  desc: String
+  desc_not: String
+  desc_in: [String!]
+  desc_not_in: [String!]
+  desc_lt: String
+  desc_lte: String
+  desc_gt: String
+  desc_gte: String
+  desc_contains: String
+  desc_not_contains: String
+  desc_starts_with: String
+  desc_not_starts_with: String
+  desc_ends_with: String
+  desc_not_ends_with: String
+  price: Int
+  price_not: Int
+  price_in: [Int!]
+  price_not_in: [Int!]
+  price_lt: Int
+  price_lte: Int
+  price_gt: Int
+  price_gte: Int
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  type: ActivityType
+  type_not: ActivityType
+  type_in: [ActivityType!]
+  type_not_in: [ActivityType!]
+  AND: [AMActivityScalarWhereInput!]
+  OR: [AMActivityScalarWhereInput!]
+  NOT: [AMActivityScalarWhereInput!]
+}
+
+type AMActivitySubscriptionPayload {
+  mutation: MutationType!
+  node: AMActivity
+  updatedFields: [String!]
+  previousValues: AMActivityPreviousValues
+}
+
+input AMActivitySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: AMActivityWhereInput
+  AND: [AMActivitySubscriptionWhereInput!]
+  OR: [AMActivitySubscriptionWhereInput!]
+  NOT: [AMActivitySubscriptionWhereInput!]
+}
+
+input AMActivityUpdateDataInput {
+  ages: String
+  desc: String
+  price: Int
+  title: String
+  type: ActivityType
+}
+
+input AMActivityUpdateInput {
+  ages: String
+  desc: String
+  price: Int
+  title: String
+  type: ActivityType
+}
+
+input AMActivityUpdateManyDataInput {
+  ages: String
+  desc: String
+  price: Int
+  title: String
+  type: ActivityType
+}
+
+input AMActivityUpdateManyInput {
+  create: [AMActivityCreateInput!]
+  update: [AMActivityUpdateWithWhereUniqueNestedInput!]
+  upsert: [AMActivityUpsertWithWhereUniqueNestedInput!]
+  delete: [AMActivityWhereUniqueInput!]
+  connect: [AMActivityWhereUniqueInput!]
+  set: [AMActivityWhereUniqueInput!]
+  disconnect: [AMActivityWhereUniqueInput!]
+  deleteMany: [AMActivityScalarWhereInput!]
+  updateMany: [AMActivityUpdateManyWithWhereNestedInput!]
+}
+
+input AMActivityUpdateManyMutationInput {
+  ages: String
+  desc: String
+  price: Int
+  title: String
+  type: ActivityType
+}
+
+input AMActivityUpdateManyWithWhereNestedInput {
+  where: AMActivityScalarWhereInput!
+  data: AMActivityUpdateManyDataInput!
+}
+
+input AMActivityUpdateWithWhereUniqueNestedInput {
+  where: AMActivityWhereUniqueInput!
+  data: AMActivityUpdateDataInput!
+}
+
+input AMActivityUpsertWithWhereUniqueNestedInput {
+  where: AMActivityWhereUniqueInput!
+  update: AMActivityUpdateDataInput!
+  create: AMActivityCreateInput!
+}
+
+input AMActivityWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  ages: String
+  ages_not: String
+  ages_in: [String!]
+  ages_not_in: [String!]
+  ages_lt: String
+  ages_lte: String
+  ages_gt: String
+  ages_gte: String
+  ages_contains: String
+  ages_not_contains: String
+  ages_starts_with: String
+  ages_not_starts_with: String
+  ages_ends_with: String
+  ages_not_ends_with: String
+  desc: String
+  desc_not: String
+  desc_in: [String!]
+  desc_not_in: [String!]
+  desc_lt: String
+  desc_lte: String
+  desc_gt: String
+  desc_gte: String
+  desc_contains: String
+  desc_not_contains: String
+  desc_starts_with: String
+  desc_not_starts_with: String
+  desc_ends_with: String
+  desc_not_ends_with: String
+  price: Int
+  price_not: Int
+  price_in: [Int!]
+  price_not_in: [Int!]
+  price_lt: Int
+  price_lte: Int
+  price_gt: Int
+  price_gte: Int
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  type: ActivityType
+  type_not: ActivityType
+  type_in: [ActivityType!]
+  type_not_in: [ActivityType!]
+  AND: [AMActivityWhereInput!]
+  OR: [AMActivityWhereInput!]
+  NOT: [AMActivityWhereInput!]
+}
+
+input AMActivityWhereUniqueInput {
+  id: ID
 }
 
 type BatchPayload {
   count: Long!
 }
 
+scalar DateTime
+
+type FieldTrip {
+  id: ID!
+  price: Int!
+  title: String!
+}
+
+type FieldTripConnection {
+  pageInfo: PageInfo!
+  edges: [FieldTripEdge]!
+  aggregate: AggregateFieldTrip!
+}
+
+input FieldTripCreateInput {
+  price: Int
+  title: String!
+}
+
+input FieldTripCreateManyInput {
+  create: [FieldTripCreateInput!]
+  connect: [FieldTripWhereUniqueInput!]
+}
+
+type FieldTripEdge {
+  node: FieldTrip!
+  cursor: String!
+}
+
+enum FieldTripOrderByInput {
+  id_ASC
+  id_DESC
+  price_ASC
+  price_DESC
+  title_ASC
+  title_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type FieldTripPreviousValues {
+  id: ID!
+  price: Int!
+  title: String!
+}
+
+input FieldTripScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  price: Int
+  price_not: Int
+  price_in: [Int!]
+  price_not_in: [Int!]
+  price_lt: Int
+  price_lte: Int
+  price_gt: Int
+  price_gte: Int
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  AND: [FieldTripScalarWhereInput!]
+  OR: [FieldTripScalarWhereInput!]
+  NOT: [FieldTripScalarWhereInput!]
+}
+
+type FieldTripSubscriptionPayload {
+  mutation: MutationType!
+  node: FieldTrip
+  updatedFields: [String!]
+  previousValues: FieldTripPreviousValues
+}
+
+input FieldTripSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: FieldTripWhereInput
+  AND: [FieldTripSubscriptionWhereInput!]
+  OR: [FieldTripSubscriptionWhereInput!]
+  NOT: [FieldTripSubscriptionWhereInput!]
+}
+
+input FieldTripUpdateDataInput {
+  price: Int
+  title: String
+}
+
+input FieldTripUpdateInput {
+  price: Int
+  title: String
+}
+
+input FieldTripUpdateManyDataInput {
+  price: Int
+  title: String
+}
+
+input FieldTripUpdateManyInput {
+  create: [FieldTripCreateInput!]
+  update: [FieldTripUpdateWithWhereUniqueNestedInput!]
+  upsert: [FieldTripUpsertWithWhereUniqueNestedInput!]
+  delete: [FieldTripWhereUniqueInput!]
+  connect: [FieldTripWhereUniqueInput!]
+  set: [FieldTripWhereUniqueInput!]
+  disconnect: [FieldTripWhereUniqueInput!]
+  deleteMany: [FieldTripScalarWhereInput!]
+  updateMany: [FieldTripUpdateManyWithWhereNestedInput!]
+}
+
+input FieldTripUpdateManyMutationInput {
+  price: Int
+  title: String
+}
+
+input FieldTripUpdateManyWithWhereNestedInput {
+  where: FieldTripScalarWhereInput!
+  data: FieldTripUpdateManyDataInput!
+}
+
+input FieldTripUpdateWithWhereUniqueNestedInput {
+  where: FieldTripWhereUniqueInput!
+  data: FieldTripUpdateDataInput!
+}
+
+input FieldTripUpsertWithWhereUniqueNestedInput {
+  where: FieldTripWhereUniqueInput!
+  update: FieldTripUpdateDataInput!
+  create: FieldTripCreateInput!
+}
+
+input FieldTripWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  price: Int
+  price_not: Int
+  price_in: [Int!]
+  price_not_in: [Int!]
+  price_lt: Int
+  price_lte: Int
+  price_gt: Int
+  price_gte: Int
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  AND: [FieldTripWhereInput!]
+  OR: [FieldTripWhereInput!]
+  NOT: [FieldTripWhereInput!]
+}
+
+input FieldTripWhereUniqueInput {
+  id: ID
+}
+
+enum Level {
+  PRESCHOOL
+  LOWER_ELEMENTARY
+  UPPER_ELEMENTARY
+}
+
 scalar Long
 
 type Mutation {
+  createAMActivity(data: AMActivityCreateInput!): AMActivity!
+  updateAMActivity(data: AMActivityUpdateInput!, where: AMActivityWhereUniqueInput!): AMActivity
+  updateManyAMActivities(data: AMActivityUpdateManyMutationInput!, where: AMActivityWhereInput): BatchPayload!
+  upsertAMActivity(where: AMActivityWhereUniqueInput!, create: AMActivityCreateInput!, update: AMActivityUpdateInput!): AMActivity!
+  deleteAMActivity(where: AMActivityWhereUniqueInput!): AMActivity
+  deleteManyAMActivities(where: AMActivityWhereInput): BatchPayload!
+  createFieldTrip(data: FieldTripCreateInput!): FieldTrip!
+  updateFieldTrip(data: FieldTripUpdateInput!, where: FieldTripWhereUniqueInput!): FieldTrip
+  updateManyFieldTrips(data: FieldTripUpdateManyMutationInput!, where: FieldTripWhereInput): BatchPayload!
+  upsertFieldTrip(where: FieldTripWhereUniqueInput!, create: FieldTripCreateInput!, update: FieldTripUpdateInput!): FieldTrip!
+  deleteFieldTrip(where: FieldTripWhereUniqueInput!): FieldTrip
+  deleteManyFieldTrips(where: FieldTripWhereInput): BatchPayload!
+  createStudent(data: StudentCreateInput!): Student!
+  updateStudent(data: StudentUpdateInput!, where: StudentWhereUniqueInput!): Student
+  updateManyStudents(data: StudentUpdateManyMutationInput!, where: StudentWhereInput): BatchPayload!
+  upsertStudent(where: StudentWhereUniqueInput!, create: StudentCreateInput!, update: StudentUpdateInput!): Student!
+  deleteStudent(where: StudentWhereUniqueInput!): Student
+  deleteManyStudents(where: StudentWhereInput): BatchPayload!
+  createStudentSchedule(data: StudentScheduleCreateInput!): StudentSchedule!
+  updateStudentSchedule(data: StudentScheduleUpdateInput!, where: StudentScheduleWhereUniqueInput!): StudentSchedule
+  updateManyStudentSchedules(data: StudentScheduleUpdateManyMutationInput!, where: StudentScheduleWhereInput): BatchPayload!
+  upsertStudentSchedule(where: StudentScheduleWhereUniqueInput!, create: StudentScheduleCreateInput!, update: StudentScheduleUpdateInput!): StudentSchedule!
+  deleteStudentSchedule(where: StudentScheduleWhereUniqueInput!): StudentSchedule
+  deleteManyStudentSchedules(where: StudentScheduleWhereInput): BatchPayload!
+  createSummerSchedule(data: SummerScheduleCreateInput!): SummerSchedule!
+  updateSummerSchedule(data: SummerScheduleUpdateInput!, where: SummerScheduleWhereUniqueInput!): SummerSchedule
+  updateManySummerSchedules(data: SummerScheduleUpdateManyMutationInput!, where: SummerScheduleWhereInput): BatchPayload!
+  upsertSummerSchedule(where: SummerScheduleWhereUniqueInput!, create: SummerScheduleCreateInput!, update: SummerScheduleUpdateInput!): SummerSchedule!
+  deleteSummerSchedule(where: SummerScheduleWhereUniqueInput!): SummerSchedule
+  deleteManySummerSchedules(where: SummerScheduleWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   deleteUser(where: UserWhereUniqueInput!): User
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  createWeek(data: WeekCreateInput!): Week!
+  updateWeek(data: WeekUpdateInput!, where: WeekWhereUniqueInput!): Week
+  updateManyWeeks(data: WeekUpdateManyMutationInput!, where: WeekWhereInput): BatchPayload!
+  upsertWeek(where: WeekWhereUniqueInput!, create: WeekCreateInput!, update: WeekUpdateInput!): Week!
+  deleteWeek(where: WeekWhereUniqueInput!): Week
+  deleteManyWeeks(where: WeekWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -40,14 +604,428 @@ type PageInfo {
 }
 
 type Query {
+  aMActivity(where: AMActivityWhereUniqueInput!): AMActivity
+  aMActivities(where: AMActivityWhereInput, orderBy: AMActivityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AMActivity]!
+  aMActivitiesConnection(where: AMActivityWhereInput, orderBy: AMActivityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AMActivityConnection!
+  fieldTrip(where: FieldTripWhereUniqueInput!): FieldTrip
+  fieldTrips(where: FieldTripWhereInput, orderBy: FieldTripOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldTrip]!
+  fieldTripsConnection(where: FieldTripWhereInput, orderBy: FieldTripOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FieldTripConnection!
+  student(where: StudentWhereUniqueInput!): Student
+  students(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Student]!
+  studentsConnection(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StudentConnection!
+  studentSchedule(where: StudentScheduleWhereUniqueInput!): StudentSchedule
+  studentSchedules(where: StudentScheduleWhereInput, orderBy: StudentScheduleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StudentSchedule]!
+  studentSchedulesConnection(where: StudentScheduleWhereInput, orderBy: StudentScheduleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StudentScheduleConnection!
+  summerSchedule(where: SummerScheduleWhereUniqueInput!): SummerSchedule
+  summerSchedules(where: SummerScheduleWhereInput, orderBy: SummerScheduleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SummerSchedule]!
+  summerSchedulesConnection(where: SummerScheduleWhereInput, orderBy: SummerScheduleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SummerScheduleConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  week(where: WeekWhereUniqueInput!): Week
+  weeks(where: WeekWhereInput, orderBy: WeekOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Week]!
+  weeksConnection(where: WeekWhereInput, orderBy: WeekOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WeekConnection!
   node(id: ID!): Node
 }
 
+type Student {
+  id: ID!
+  name: String!
+}
+
+type StudentConnection {
+  pageInfo: PageInfo!
+  edges: [StudentEdge]!
+  aggregate: AggregateStudent!
+}
+
+input StudentCreateInput {
+  name: String!
+}
+
+input StudentCreateOneInput {
+  create: StudentCreateInput
+  connect: StudentWhereUniqueInput
+}
+
+type StudentEdge {
+  node: Student!
+  cursor: String!
+}
+
+enum StudentOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type StudentPreviousValues {
+  id: ID!
+  name: String!
+}
+
+type StudentSchedule {
+  id: ID!
+  amCare: Boolean
+  pmCare: Boolean
+  week: Week!
+}
+
+type StudentScheduleConnection {
+  pageInfo: PageInfo!
+  edges: [StudentScheduleEdge]!
+  aggregate: AggregateStudentSchedule!
+}
+
+input StudentScheduleCreateInput {
+  amCare: Boolean
+  pmCare: Boolean
+  week: WeekCreateOneInput!
+}
+
+input StudentScheduleCreateManyInput {
+  create: [StudentScheduleCreateInput!]
+  connect: [StudentScheduleWhereUniqueInput!]
+}
+
+type StudentScheduleEdge {
+  node: StudentSchedule!
+  cursor: String!
+}
+
+enum StudentScheduleOrderByInput {
+  id_ASC
+  id_DESC
+  amCare_ASC
+  amCare_DESC
+  pmCare_ASC
+  pmCare_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type StudentSchedulePreviousValues {
+  id: ID!
+  amCare: Boolean
+  pmCare: Boolean
+}
+
+input StudentScheduleScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  amCare: Boolean
+  amCare_not: Boolean
+  pmCare: Boolean
+  pmCare_not: Boolean
+  AND: [StudentScheduleScalarWhereInput!]
+  OR: [StudentScheduleScalarWhereInput!]
+  NOT: [StudentScheduleScalarWhereInput!]
+}
+
+type StudentScheduleSubscriptionPayload {
+  mutation: MutationType!
+  node: StudentSchedule
+  updatedFields: [String!]
+  previousValues: StudentSchedulePreviousValues
+}
+
+input StudentScheduleSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: StudentScheduleWhereInput
+  AND: [StudentScheduleSubscriptionWhereInput!]
+  OR: [StudentScheduleSubscriptionWhereInput!]
+  NOT: [StudentScheduleSubscriptionWhereInput!]
+}
+
+input StudentScheduleUpdateDataInput {
+  amCare: Boolean
+  pmCare: Boolean
+  week: WeekUpdateOneRequiredInput
+}
+
+input StudentScheduleUpdateInput {
+  amCare: Boolean
+  pmCare: Boolean
+  week: WeekUpdateOneRequiredInput
+}
+
+input StudentScheduleUpdateManyDataInput {
+  amCare: Boolean
+  pmCare: Boolean
+}
+
+input StudentScheduleUpdateManyInput {
+  create: [StudentScheduleCreateInput!]
+  update: [StudentScheduleUpdateWithWhereUniqueNestedInput!]
+  upsert: [StudentScheduleUpsertWithWhereUniqueNestedInput!]
+  delete: [StudentScheduleWhereUniqueInput!]
+  connect: [StudentScheduleWhereUniqueInput!]
+  set: [StudentScheduleWhereUniqueInput!]
+  disconnect: [StudentScheduleWhereUniqueInput!]
+  deleteMany: [StudentScheduleScalarWhereInput!]
+  updateMany: [StudentScheduleUpdateManyWithWhereNestedInput!]
+}
+
+input StudentScheduleUpdateManyMutationInput {
+  amCare: Boolean
+  pmCare: Boolean
+}
+
+input StudentScheduleUpdateManyWithWhereNestedInput {
+  where: StudentScheduleScalarWhereInput!
+  data: StudentScheduleUpdateManyDataInput!
+}
+
+input StudentScheduleUpdateWithWhereUniqueNestedInput {
+  where: StudentScheduleWhereUniqueInput!
+  data: StudentScheduleUpdateDataInput!
+}
+
+input StudentScheduleUpsertWithWhereUniqueNestedInput {
+  where: StudentScheduleWhereUniqueInput!
+  update: StudentScheduleUpdateDataInput!
+  create: StudentScheduleCreateInput!
+}
+
+input StudentScheduleWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  amCare: Boolean
+  amCare_not: Boolean
+  pmCare: Boolean
+  pmCare_not: Boolean
+  week: WeekWhereInput
+  AND: [StudentScheduleWhereInput!]
+  OR: [StudentScheduleWhereInput!]
+  NOT: [StudentScheduleWhereInput!]
+}
+
+input StudentScheduleWhereUniqueInput {
+  id: ID
+}
+
+type StudentSubscriptionPayload {
+  mutation: MutationType!
+  node: Student
+  updatedFields: [String!]
+  previousValues: StudentPreviousValues
+}
+
+input StudentSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: StudentWhereInput
+  AND: [StudentSubscriptionWhereInput!]
+  OR: [StudentSubscriptionWhereInput!]
+  NOT: [StudentSubscriptionWhereInput!]
+}
+
+input StudentUpdateDataInput {
+  name: String
+}
+
+input StudentUpdateInput {
+  name: String
+}
+
+input StudentUpdateManyMutationInput {
+  name: String
+}
+
+input StudentUpdateOneRequiredInput {
+  create: StudentCreateInput
+  update: StudentUpdateDataInput
+  upsert: StudentUpsertNestedInput
+  connect: StudentWhereUniqueInput
+}
+
+input StudentUpsertNestedInput {
+  update: StudentUpdateDataInput!
+  create: StudentCreateInput!
+}
+
+input StudentWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [StudentWhereInput!]
+  OR: [StudentWhereInput!]
+  NOT: [StudentWhereInput!]
+}
+
+input StudentWhereUniqueInput {
+  id: ID
+}
+
 type Subscription {
+  aMActivity(where: AMActivitySubscriptionWhereInput): AMActivitySubscriptionPayload
+  fieldTrip(where: FieldTripSubscriptionWhereInput): FieldTripSubscriptionPayload
+  student(where: StudentSubscriptionWhereInput): StudentSubscriptionPayload
+  studentSchedule(where: StudentScheduleSubscriptionWhereInput): StudentScheduleSubscriptionPayload
+  summerSchedule(where: SummerScheduleSubscriptionWhereInput): SummerScheduleSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  week(where: WeekSubscriptionWhereInput): WeekSubscriptionPayload
+}
+
+type SummerSchedule {
+  id: ID!
+  level: Level!
+  student: Student!
+  scheduleList(where: StudentScheduleWhereInput, orderBy: StudentScheduleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StudentSchedule!]
+}
+
+type SummerScheduleConnection {
+  pageInfo: PageInfo!
+  edges: [SummerScheduleEdge]!
+  aggregate: AggregateSummerSchedule!
+}
+
+input SummerScheduleCreateInput {
+  level: Level
+  student: StudentCreateOneInput!
+  scheduleList: StudentScheduleCreateManyInput
+}
+
+type SummerScheduleEdge {
+  node: SummerSchedule!
+  cursor: String!
+}
+
+enum SummerScheduleOrderByInput {
+  id_ASC
+  id_DESC
+  level_ASC
+  level_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type SummerSchedulePreviousValues {
+  id: ID!
+  level: Level!
+}
+
+type SummerScheduleSubscriptionPayload {
+  mutation: MutationType!
+  node: SummerSchedule
+  updatedFields: [String!]
+  previousValues: SummerSchedulePreviousValues
+}
+
+input SummerScheduleSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: SummerScheduleWhereInput
+  AND: [SummerScheduleSubscriptionWhereInput!]
+  OR: [SummerScheduleSubscriptionWhereInput!]
+  NOT: [SummerScheduleSubscriptionWhereInput!]
+}
+
+input SummerScheduleUpdateInput {
+  level: Level
+  student: StudentUpdateOneRequiredInput
+  scheduleList: StudentScheduleUpdateManyInput
+}
+
+input SummerScheduleUpdateManyMutationInput {
+  level: Level
+}
+
+input SummerScheduleWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  level: Level
+  level_not: Level
+  level_in: [Level!]
+  level_not_in: [Level!]
+  student: StudentWhereInput
+  scheduleList_every: StudentScheduleWhereInput
+  scheduleList_some: StudentScheduleWhereInput
+  scheduleList_none: StudentScheduleWhereInput
+  AND: [SummerScheduleWhereInput!]
+  OR: [SummerScheduleWhereInput!]
+  NOT: [SummerScheduleWhereInput!]
+}
+
+input SummerScheduleWhereUniqueInput {
+  id: ID
 }
 
 type User {
@@ -147,6 +1125,193 @@ input UserWhereInput {
 }
 
 input UserWhereUniqueInput {
+  id: ID
+}
+
+type Week {
+  id: ID!
+  weekNumber: Int!
+  year: Int
+  startDate: DateTime
+  endDate: DateTime
+  AM_Activity(where: AMActivityWhereInput, orderBy: AMActivityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AMActivity!]
+  PM_Class: Boolean
+  fieldTripList(where: FieldTripWhereInput, orderBy: FieldTripOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldTrip!]
+}
+
+type WeekConnection {
+  pageInfo: PageInfo!
+  edges: [WeekEdge]!
+  aggregate: AggregateWeek!
+}
+
+input WeekCreateInput {
+  weekNumber: Int!
+  year: Int
+  startDate: DateTime
+  endDate: DateTime
+  AM_Activity: AMActivityCreateManyInput
+  PM_Class: Boolean
+  fieldTripList: FieldTripCreateManyInput
+}
+
+input WeekCreateOneInput {
+  create: WeekCreateInput
+  connect: WeekWhereUniqueInput
+}
+
+type WeekEdge {
+  node: Week!
+  cursor: String!
+}
+
+enum WeekOrderByInput {
+  id_ASC
+  id_DESC
+  weekNumber_ASC
+  weekNumber_DESC
+  year_ASC
+  year_DESC
+  startDate_ASC
+  startDate_DESC
+  endDate_ASC
+  endDate_DESC
+  PM_Class_ASC
+  PM_Class_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type WeekPreviousValues {
+  id: ID!
+  weekNumber: Int!
+  year: Int
+  startDate: DateTime
+  endDate: DateTime
+  PM_Class: Boolean
+}
+
+type WeekSubscriptionPayload {
+  mutation: MutationType!
+  node: Week
+  updatedFields: [String!]
+  previousValues: WeekPreviousValues
+}
+
+input WeekSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: WeekWhereInput
+  AND: [WeekSubscriptionWhereInput!]
+  OR: [WeekSubscriptionWhereInput!]
+  NOT: [WeekSubscriptionWhereInput!]
+}
+
+input WeekUpdateDataInput {
+  weekNumber: Int
+  year: Int
+  startDate: DateTime
+  endDate: DateTime
+  AM_Activity: AMActivityUpdateManyInput
+  PM_Class: Boolean
+  fieldTripList: FieldTripUpdateManyInput
+}
+
+input WeekUpdateInput {
+  weekNumber: Int
+  year: Int
+  startDate: DateTime
+  endDate: DateTime
+  AM_Activity: AMActivityUpdateManyInput
+  PM_Class: Boolean
+  fieldTripList: FieldTripUpdateManyInput
+}
+
+input WeekUpdateManyMutationInput {
+  weekNumber: Int
+  year: Int
+  startDate: DateTime
+  endDate: DateTime
+  PM_Class: Boolean
+}
+
+input WeekUpdateOneRequiredInput {
+  create: WeekCreateInput
+  update: WeekUpdateDataInput
+  upsert: WeekUpsertNestedInput
+  connect: WeekWhereUniqueInput
+}
+
+input WeekUpsertNestedInput {
+  update: WeekUpdateDataInput!
+  create: WeekCreateInput!
+}
+
+input WeekWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  weekNumber: Int
+  weekNumber_not: Int
+  weekNumber_in: [Int!]
+  weekNumber_not_in: [Int!]
+  weekNumber_lt: Int
+  weekNumber_lte: Int
+  weekNumber_gt: Int
+  weekNumber_gte: Int
+  year: Int
+  year_not: Int
+  year_in: [Int!]
+  year_not_in: [Int!]
+  year_lt: Int
+  year_lte: Int
+  year_gt: Int
+  year_gte: Int
+  startDate: DateTime
+  startDate_not: DateTime
+  startDate_in: [DateTime!]
+  startDate_not_in: [DateTime!]
+  startDate_lt: DateTime
+  startDate_lte: DateTime
+  startDate_gt: DateTime
+  startDate_gte: DateTime
+  endDate: DateTime
+  endDate_not: DateTime
+  endDate_in: [DateTime!]
+  endDate_not_in: [DateTime!]
+  endDate_lt: DateTime
+  endDate_lte: DateTime
+  endDate_gt: DateTime
+  endDate_gte: DateTime
+  AM_Activity_every: AMActivityWhereInput
+  AM_Activity_some: AMActivityWhereInput
+  AM_Activity_none: AMActivityWhereInput
+  PM_Class: Boolean
+  PM_Class_not: Boolean
+  fieldTripList_every: FieldTripWhereInput
+  fieldTripList_some: FieldTripWhereInput
+  fieldTripList_none: FieldTripWhereInput
+  AND: [WeekWhereInput!]
+  OR: [WeekWhereInput!]
+  NOT: [WeekWhereInput!]
+}
+
+input WeekWhereUniqueInput {
   id: ID
 }
 `

@@ -2,3 +2,60 @@ type User {
   id: ID! @unique
   name: String!
 }
+
+type SummerSchedule {
+  id: ID! @unique
+  level: Level! @default(value: "PRESCHOOL")
+  student: Student!
+  scheduleList: [StudentSchedule!]!
+}
+
+type Student {
+  id: ID! @unique
+  name: String!
+}
+
+type StudentSchedule {
+  id: ID! @unique
+  amCare: Boolean @default(value: "false")
+  pmCare: Boolean @default(value: "false")
+  week: Week!
+}
+
+type Week {
+  id: ID! @unique
+  weekNumber: Int!
+  year: Int @default(value: "2019")
+  startDate: DateTime
+  endDate: DateTime
+  AM_Activity: [AMActivity]!
+  PM_Class: Boolean @default(value: "false")
+  fieldTripList: [FieldTrip]!
+}
+
+type AMActivity {
+  id: ID! @unique
+  ages: String
+  desc: String
+  price: Int! @default(value: "130")
+  title: String!
+  type: ActivityType! @default(value: "CLASS")
+}
+
+type FieldTrip {
+  id: ID! @unique
+  price: Int! @default(value: "25")
+  title: String!
+}
+
+enum ActivityType {
+  CAMP,
+  CLASS
+}
+
+enum Level {
+  PRESCHOOL,
+  LOWER_ELEMENTARY,
+  UPPER_ELEMENTARY
+}
+
