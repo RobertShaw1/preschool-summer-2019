@@ -395,11 +395,17 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type SummerScheduleOrderByInput =
+export type WeekOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "level_ASC"
-  | "level_DESC"
+  | "weekNumber_ASC"
+  | "weekNumber_DESC"
+  | "year_ASC"
+  | "year_DESC"
+  | "startDate_ASC"
+  | "startDate_DESC"
+  | "endDate_ASC"
+  | "endDate_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -417,15 +423,7 @@ export type FieldTripOrderByInput =
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
-export type StudentOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "name_ASC"
-  | "name_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC";
+export type Level = "PRESCHOOL" | "LOWER_ELEMENTARY" | "UPPER_ELEMENTARY";
 
 export type StudentScheduleOrderByInput =
   | "id_ASC"
@@ -434,12 +432,26 @@ export type StudentScheduleOrderByInput =
   | "amCare_DESC"
   | "pmCare_ASC"
   | "pmCare_DESC"
+  | "pmClass_ASC"
+  | "pmClass_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
-export type Level = "PRESCHOOL" | "LOWER_ELEMENTARY" | "UPPER_ELEMENTARY";
+export type StudentOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "age_ASC"
+  | "age_DESC"
+  | "level_ASC"
+  | "level_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
 
 export type AMActivityOrderByInput =
   | "id_ASC"
@@ -463,6 +475,18 @@ export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
 export type ActivityType = "CAMP" | "CLASS";
 
+export type SummerScheduleOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "level_ASC"
+  | "level_DESC"
+  | "year_ASC"
+  | "year_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
 export type UserOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -473,57 +497,59 @@ export type UserOrderByInput =
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
-export type WeekOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "weekNumber_ASC"
-  | "weekNumber_DESC"
-  | "year_ASC"
-  | "year_DESC"
-  | "startDate_ASC"
-  | "startDate_DESC"
-  | "endDate_ASC"
-  | "endDate_DESC"
-  | "PM_Class_ASC"
-  | "PM_Class_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC";
-
-export interface StudentUpdateInput {
-  name?: String;
+export interface WeekCreateOneInput {
+  create?: WeekCreateInput;
+  connect?: WeekWhereUniqueInput;
 }
 
 export type AMActivityWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
-export interface StudentScheduleCreateManyInput {
-  create?: StudentScheduleCreateInput[] | StudentScheduleCreateInput;
-  connect?: StudentScheduleWhereUniqueInput[] | StudentScheduleWhereUniqueInput;
+export interface StudentScheduleUpdateManyWithWhereNestedInput {
+  where: StudentScheduleScalarWhereInput;
+  data: StudentScheduleUpdateManyDataInput;
 }
 
-export interface FieldTripUpdateWithWhereUniqueNestedInput {
-  where: FieldTripWhereUniqueInput;
-  data: FieldTripUpdateDataInput;
+export interface FieldTripUpdateDataInput {
+  price?: Int;
+  title?: String;
 }
 
-export interface StudentCreateOneInput {
-  create?: StudentCreateInput;
-  connect?: StudentWhereUniqueInput;
+export interface StudentScheduleScalarWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  amCare?: Boolean;
+  amCare_not?: Boolean;
+  pmCare?: Boolean;
+  pmCare_not?: Boolean;
+  pmClass?: Boolean;
+  pmClass_not?: Boolean;
+  AND?: StudentScheduleScalarWhereInput[] | StudentScheduleScalarWhereInput;
+  OR?: StudentScheduleScalarWhereInput[] | StudentScheduleScalarWhereInput;
+  NOT?: StudentScheduleScalarWhereInput[] | StudentScheduleScalarWhereInput;
 }
 
-export interface FieldTripCreateManyInput {
-  create?: FieldTripCreateInput[] | FieldTripCreateInput;
-  connect?: FieldTripWhereUniqueInput[] | FieldTripWhereUniqueInput;
+export interface StudentScheduleUpdateWithWhereUniqueNestedInput {
+  where: StudentScheduleWhereUniqueInput;
+  data: StudentScheduleUpdateDataInput;
 }
 
-export interface SummerScheduleCreateInput {
-  level?: Level;
-  student: StudentCreateOneInput;
-  scheduleList?: StudentScheduleCreateManyInput;
-}
+export type WeekWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
 
 export interface FieldTripWhereInput {
   id?: ID_Input;
@@ -567,9 +593,11 @@ export interface FieldTripWhereInput {
   NOT?: FieldTripWhereInput[] | FieldTripWhereInput;
 }
 
-export type WeekWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
+export interface StudentScheduleUpsertWithWhereUniqueNestedInput {
+  where: StudentScheduleWhereUniqueInput;
+  update: StudentScheduleUpdateDataInput;
+  create: StudentScheduleCreateInput;
+}
 
 export interface SummerScheduleSubscriptionWhereInput {
   mutation_in?: MutationType[] | MutationType;
@@ -588,9 +616,9 @@ export interface SummerScheduleSubscriptionWhereInput {
     | SummerScheduleSubscriptionWhereInput;
 }
 
-export interface StudentScheduleUpdateManyMutationInput {
-  amCare?: Boolean;
-  pmCare?: Boolean;
+export interface WeekUpsertNestedInput {
+  update: WeekUpdateDataInput;
+  create: WeekCreateInput;
 }
 
 export interface StudentSubscriptionWhereInput {
@@ -604,9 +632,9 @@ export interface StudentSubscriptionWhereInput {
   NOT?: StudentSubscriptionWhereInput[] | StudentSubscriptionWhereInput;
 }
 
-export interface WeekUpsertNestedInput {
-  update: WeekUpdateDataInput;
-  create: WeekCreateInput;
+export interface FieldTripUpdateManyDataInput {
+  price?: Int;
+  title?: String;
 }
 
 export interface FieldTripSubscriptionWhereInput {
@@ -618,53 +646,6 @@ export interface FieldTripSubscriptionWhereInput {
   AND?: FieldTripSubscriptionWhereInput[] | FieldTripSubscriptionWhereInput;
   OR?: FieldTripSubscriptionWhereInput[] | FieldTripSubscriptionWhereInput;
   NOT?: FieldTripSubscriptionWhereInput[] | FieldTripSubscriptionWhereInput;
-}
-
-export interface FieldTripUpdateManyDataInput {
-  price?: Int;
-  title?: String;
-}
-
-export interface AMActivitySubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: AMActivityWhereInput;
-  AND?: AMActivitySubscriptionWhereInput[] | AMActivitySubscriptionWhereInput;
-  OR?: AMActivitySubscriptionWhereInput[] | AMActivitySubscriptionWhereInput;
-  NOT?: AMActivitySubscriptionWhereInput[] | AMActivitySubscriptionWhereInput;
-}
-
-export interface FieldTripUpdateManyWithWhereNestedInput {
-  where: FieldTripScalarWhereInput;
-  data: FieldTripUpdateManyDataInput;
-}
-
-export interface WeekUpdateInput {
-  weekNumber?: Int;
-  year?: Int;
-  startDate?: DateTimeInput;
-  endDate?: DateTimeInput;
-  AM_Activity?: AMActivityUpdateManyInput;
-  PM_Class?: Boolean;
-  fieldTripList?: FieldTripUpdateManyInput;
-}
-
-export type StudentScheduleWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface UserCreateInput {
-  name: String;
-}
-
-export interface AMActivityCreateInput {
-  ages?: String;
-  desc?: String;
-  price?: Int;
-  title: String;
-  type?: ActivityType;
 }
 
 export interface StudentScheduleWhereInput {
@@ -686,10 +667,31 @@ export interface StudentScheduleWhereInput {
   amCare_not?: Boolean;
   pmCare?: Boolean;
   pmCare_not?: Boolean;
+  pmClass?: Boolean;
+  pmClass_not?: Boolean;
   week?: WeekWhereInput;
   AND?: StudentScheduleWhereInput[] | StudentScheduleWhereInput;
   OR?: StudentScheduleWhereInput[] | StudentScheduleWhereInput;
   NOT?: StudentScheduleWhereInput[] | StudentScheduleWhereInput;
+}
+
+export interface WeekUpdateManyMutationInput {
+  weekNumber?: Int;
+  year?: Int;
+  startDate?: DateTimeInput;
+  endDate?: DateTimeInput;
+}
+
+export interface AMActivityCreateInput {
+  ages?: String;
+  desc?: String;
+  price?: Int;
+  title: String;
+  type?: ActivityType;
+}
+
+export interface UserUpdateManyMutationInput {
+  name?: String;
 }
 
 export interface AMActivityUpdateInput {
@@ -700,20 +702,7 @@ export interface AMActivityUpdateInput {
   type?: ActivityType;
 }
 
-export interface StudentScheduleUpdateManyDataInput {
-  amCare?: Boolean;
-  pmCare?: Boolean;
-}
-
-export interface AMActivityUpdateManyMutationInput {
-  ages?: String;
-  desc?: String;
-  price?: Int;
-  title?: String;
-  type?: ActivityType;
-}
-
-export interface StudentScheduleScalarWhereInput {
+export interface StudentWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -728,13 +717,61 @@ export interface StudentScheduleScalarWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  amCare?: Boolean;
-  amCare_not?: Boolean;
-  pmCare?: Boolean;
-  pmCare_not?: Boolean;
-  AND?: StudentScheduleScalarWhereInput[] | StudentScheduleScalarWhereInput;
-  OR?: StudentScheduleScalarWhereInput[] | StudentScheduleScalarWhereInput;
-  NOT?: StudentScheduleScalarWhereInput[] | StudentScheduleScalarWhereInput;
+  age?: Int;
+  age_not?: Int;
+  age_in?: Int[] | Int;
+  age_not_in?: Int[] | Int;
+  age_lt?: Int;
+  age_lte?: Int;
+  age_gt?: Int;
+  age_gte?: Int;
+  level?: Level;
+  level_not?: Level;
+  level_in?: Level[] | Level;
+  level_not_in?: Level[] | Level;
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  scheduleList_every?: StudentScheduleWhereInput;
+  scheduleList_some?: StudentScheduleWhereInput;
+  scheduleList_none?: StudentScheduleWhereInput;
+  AND?: StudentWhereInput[] | StudentWhereInput;
+  OR?: StudentWhereInput[] | StudentWhereInput;
+  NOT?: StudentWhereInput[] | StudentWhereInput;
+}
+
+export interface AMActivityUpdateManyMutationInput {
+  ages?: String;
+  desc?: String;
+  price?: Int;
+  title?: String;
+  type?: ActivityType;
+}
+
+export interface SummerScheduleUpdateManyMutationInput {
+  level?: Level;
+  year?: Int;
+}
+
+export interface FieldTripUpdateManyWithWhereNestedInput {
+  where: FieldTripScalarWhereInput;
+  data: FieldTripUpdateManyDataInput;
+}
+
+export interface WeekUpdateManyWithWhereNestedInput {
+  where: WeekScalarWhereInput;
+  data: WeekUpdateManyDataInput;
 }
 
 export interface FieldTripScalarWhereInput {
@@ -779,372 +816,7 @@ export interface FieldTripScalarWhereInput {
   NOT?: FieldTripScalarWhereInput[] | FieldTripScalarWhereInput;
 }
 
-export type SummerScheduleWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface FieldTripUpsertWithWhereUniqueNestedInput {
-  where: FieldTripWhereUniqueInput;
-  update: FieldTripUpdateDataInput;
-  create: FieldTripCreateInput;
-}
-
-export interface StudentScheduleUpdateWithWhereUniqueNestedInput {
-  where: StudentScheduleWhereUniqueInput;
-  data: StudentScheduleUpdateDataInput;
-}
-
-export interface FieldTripCreateInput {
-  price?: Int;
-  title: String;
-}
-
-export interface AMActivityWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  ages?: String;
-  ages_not?: String;
-  ages_in?: String[] | String;
-  ages_not_in?: String[] | String;
-  ages_lt?: String;
-  ages_lte?: String;
-  ages_gt?: String;
-  ages_gte?: String;
-  ages_contains?: String;
-  ages_not_contains?: String;
-  ages_starts_with?: String;
-  ages_not_starts_with?: String;
-  ages_ends_with?: String;
-  ages_not_ends_with?: String;
-  desc?: String;
-  desc_not?: String;
-  desc_in?: String[] | String;
-  desc_not_in?: String[] | String;
-  desc_lt?: String;
-  desc_lte?: String;
-  desc_gt?: String;
-  desc_gte?: String;
-  desc_contains?: String;
-  desc_not_contains?: String;
-  desc_starts_with?: String;
-  desc_not_starts_with?: String;
-  desc_ends_with?: String;
-  desc_not_ends_with?: String;
-  price?: Int;
-  price_not?: Int;
-  price_in?: Int[] | Int;
-  price_not_in?: Int[] | Int;
-  price_lt?: Int;
-  price_lte?: Int;
-  price_gt?: Int;
-  price_gte?: Int;
-  title?: String;
-  title_not?: String;
-  title_in?: String[] | String;
-  title_not_in?: String[] | String;
-  title_lt?: String;
-  title_lte?: String;
-  title_gt?: String;
-  title_gte?: String;
-  title_contains?: String;
-  title_not_contains?: String;
-  title_starts_with?: String;
-  title_not_starts_with?: String;
-  title_ends_with?: String;
-  title_not_ends_with?: String;
-  type?: ActivityType;
-  type_not?: ActivityType;
-  type_in?: ActivityType[] | ActivityType;
-  type_not_in?: ActivityType[] | ActivityType;
-  AND?: AMActivityWhereInput[] | AMActivityWhereInput;
-  OR?: AMActivityWhereInput[] | AMActivityWhereInput;
-  NOT?: AMActivityWhereInput[] | AMActivityWhereInput;
-}
-
-export interface FieldTripUpdateInput {
-  price?: Int;
-  title?: String;
-}
-
-export interface StudentUpsertNestedInput {
-  update: StudentUpdateDataInput;
-  create: StudentCreateInput;
-}
-
-export interface FieldTripUpdateManyMutationInput {
-  price?: Int;
-  title?: String;
-}
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface StudentCreateInput {
-  name: String;
-}
-
-export interface UserWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  name?: String;
-  name_not?: String;
-  name_in?: String[] | String;
-  name_not_in?: String[] | String;
-  name_lt?: String;
-  name_lte?: String;
-  name_gt?: String;
-  name_gte?: String;
-  name_contains?: String;
-  name_not_contains?: String;
-  name_starts_with?: String;
-  name_not_starts_with?: String;
-  name_ends_with?: String;
-  name_not_ends_with?: String;
-  AND?: UserWhereInput[] | UserWhereInput;
-  OR?: UserWhereInput[] | UserWhereInput;
-  NOT?: UserWhereInput[] | UserWhereInput;
-}
-
-export interface FieldTripUpdateDataInput {
-  price?: Int;
-  title?: String;
-}
-
-export interface WeekSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: WeekWhereInput;
-  AND?: WeekSubscriptionWhereInput[] | WeekSubscriptionWhereInput;
-  OR?: WeekSubscriptionWhereInput[] | WeekSubscriptionWhereInput;
-  NOT?: WeekSubscriptionWhereInput[] | WeekSubscriptionWhereInput;
-}
-
-export interface StudentUpdateManyMutationInput {
-  name?: String;
-}
-
-export interface StudentScheduleSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: StudentScheduleWhereInput;
-  AND?:
-    | StudentScheduleSubscriptionWhereInput[]
-    | StudentScheduleSubscriptionWhereInput;
-  OR?:
-    | StudentScheduleSubscriptionWhereInput[]
-    | StudentScheduleSubscriptionWhereInput;
-  NOT?:
-    | StudentScheduleSubscriptionWhereInput[]
-    | StudentScheduleSubscriptionWhereInput;
-}
-
-export interface StudentScheduleCreateInput {
-  amCare?: Boolean;
-  pmCare?: Boolean;
-  week: WeekCreateOneInput;
-}
-
-export interface StudentWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  name?: String;
-  name_not?: String;
-  name_in?: String[] | String;
-  name_not_in?: String[] | String;
-  name_lt?: String;
-  name_lte?: String;
-  name_gt?: String;
-  name_gte?: String;
-  name_contains?: String;
-  name_not_contains?: String;
-  name_starts_with?: String;
-  name_not_starts_with?: String;
-  name_ends_with?: String;
-  name_not_ends_with?: String;
-  AND?: StudentWhereInput[] | StudentWhereInput;
-  OR?: StudentWhereInput[] | StudentWhereInput;
-  NOT?: StudentWhereInput[] | StudentWhereInput;
-}
-
-export interface WeekCreateOneInput {
-  create?: WeekCreateInput;
-  connect?: WeekWhereUniqueInput;
-}
-
-export interface UserUpdateManyMutationInput {
-  name?: String;
-}
-
-export interface WeekCreateInput {
-  weekNumber: Int;
-  year?: Int;
-  startDate?: DateTimeInput;
-  endDate?: DateTimeInput;
-  AM_Activity?: AMActivityCreateManyInput;
-  PM_Class?: Boolean;
-  fieldTripList?: FieldTripCreateManyInput;
-}
-
-export interface SummerScheduleUpdateManyMutationInput {
-  level?: Level;
-}
-
-export interface AMActivityCreateManyInput {
-  create?: AMActivityCreateInput[] | AMActivityCreateInput;
-  connect?: AMActivityWhereUniqueInput[] | AMActivityWhereUniqueInput;
-}
-
-export interface StudentScheduleUpdateManyWithWhereNestedInput {
-  where: StudentScheduleScalarWhereInput;
-  data: StudentScheduleUpdateManyDataInput;
-}
-
-export type FieldTripWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface StudentScheduleUpdateDataInput {
-  amCare?: Boolean;
-  pmCare?: Boolean;
-  week?: WeekUpdateOneRequiredInput;
-}
-
-export interface StudentScheduleUpdateInput {
-  amCare?: Boolean;
-  pmCare?: Boolean;
-  week?: WeekUpdateOneRequiredInput;
-}
-
-export interface StudentScheduleUpdateManyInput {
-  create?: StudentScheduleCreateInput[] | StudentScheduleCreateInput;
-  update?:
-    | StudentScheduleUpdateWithWhereUniqueNestedInput[]
-    | StudentScheduleUpdateWithWhereUniqueNestedInput;
-  upsert?:
-    | StudentScheduleUpsertWithWhereUniqueNestedInput[]
-    | StudentScheduleUpsertWithWhereUniqueNestedInput;
-  delete?: StudentScheduleWhereUniqueInput[] | StudentScheduleWhereUniqueInput;
-  connect?: StudentScheduleWhereUniqueInput[] | StudentScheduleWhereUniqueInput;
-  set?: StudentScheduleWhereUniqueInput[] | StudentScheduleWhereUniqueInput;
-  disconnect?:
-    | StudentScheduleWhereUniqueInput[]
-    | StudentScheduleWhereUniqueInput;
-  deleteMany?:
-    | StudentScheduleScalarWhereInput[]
-    | StudentScheduleScalarWhereInput;
-  updateMany?:
-    | StudentScheduleUpdateManyWithWhereNestedInput[]
-    | StudentScheduleUpdateManyWithWhereNestedInput;
-}
-
-export interface WeekUpdateOneRequiredInput {
-  create?: WeekCreateInput;
-  update?: WeekUpdateDataInput;
-  upsert?: WeekUpsertNestedInput;
-  connect?: WeekWhereUniqueInput;
-}
-
-export interface StudentUpdateOneRequiredInput {
-  create?: StudentCreateInput;
-  update?: StudentUpdateDataInput;
-  upsert?: StudentUpsertNestedInput;
-  connect?: StudentWhereUniqueInput;
-}
-
-export interface WeekUpdateDataInput {
-  weekNumber?: Int;
-  year?: Int;
-  startDate?: DateTimeInput;
-  endDate?: DateTimeInput;
-  AM_Activity?: AMActivityUpdateManyInput;
-  PM_Class?: Boolean;
-  fieldTripList?: FieldTripUpdateManyInput;
-}
-
-export interface UserSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: UserWhereInput;
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-}
-
-export interface AMActivityUpdateManyInput {
-  create?: AMActivityCreateInput[] | AMActivityCreateInput;
-  update?:
-    | AMActivityUpdateWithWhereUniqueNestedInput[]
-    | AMActivityUpdateWithWhereUniqueNestedInput;
-  upsert?:
-    | AMActivityUpsertWithWhereUniqueNestedInput[]
-    | AMActivityUpsertWithWhereUniqueNestedInput;
-  delete?: AMActivityWhereUniqueInput[] | AMActivityWhereUniqueInput;
-  connect?: AMActivityWhereUniqueInput[] | AMActivityWhereUniqueInput;
-  set?: AMActivityWhereUniqueInput[] | AMActivityWhereUniqueInput;
-  disconnect?: AMActivityWhereUniqueInput[] | AMActivityWhereUniqueInput;
-  deleteMany?: AMActivityScalarWhereInput[] | AMActivityScalarWhereInput;
-  updateMany?:
-    | AMActivityUpdateManyWithWhereNestedInput[]
-    | AMActivityUpdateManyWithWhereNestedInput;
-}
-
-export interface WeekUpdateManyMutationInput {
-  weekNumber?: Int;
-  year?: Int;
-  startDate?: DateTimeInput;
-  endDate?: DateTimeInput;
-  PM_Class?: Boolean;
-}
-
-export interface AMActivityUpdateWithWhereUniqueNestedInput {
-  where: AMActivityWhereUniqueInput;
-  data: AMActivityUpdateDataInput;
-}
-
-export interface WeekWhereInput {
+export interface WeekScalarWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -1191,25 +863,47 @@ export interface WeekWhereInput {
   endDate_lte?: DateTimeInput;
   endDate_gt?: DateTimeInput;
   endDate_gte?: DateTimeInput;
-  AM_Activity_every?: AMActivityWhereInput;
-  AM_Activity_some?: AMActivityWhereInput;
-  AM_Activity_none?: AMActivityWhereInput;
-  PM_Class?: Boolean;
-  PM_Class_not?: Boolean;
-  fieldTripList_every?: FieldTripWhereInput;
-  fieldTripList_some?: FieldTripWhereInput;
-  fieldTripList_none?: FieldTripWhereInput;
-  AND?: WeekWhereInput[] | WeekWhereInput;
-  OR?: WeekWhereInput[] | WeekWhereInput;
-  NOT?: WeekWhereInput[] | WeekWhereInput;
+  AND?: WeekScalarWhereInput[] | WeekScalarWhereInput;
+  OR?: WeekScalarWhereInput[] | WeekScalarWhereInput;
+  NOT?: WeekScalarWhereInput[] | WeekScalarWhereInput;
 }
 
-export interface AMActivityUpdateDataInput {
-  ages?: String;
-  desc?: String;
+export interface FieldTripCreateInput {
+  price?: Int;
+  title: String;
+}
+
+export interface WeekUpdateWithWhereUniqueNestedInput {
+  where: WeekWhereUniqueInput;
+  data: WeekUpdateDataInput;
+}
+
+export interface FieldTripUpdateInput {
   price?: Int;
   title?: String;
-  type?: ActivityType;
+}
+
+export interface WeekUpdateManyInput {
+  create?: WeekCreateInput[] | WeekCreateInput;
+  update?:
+    | WeekUpdateWithWhereUniqueNestedInput[]
+    | WeekUpdateWithWhereUniqueNestedInput;
+  upsert?:
+    | WeekUpsertWithWhereUniqueNestedInput[]
+    | WeekUpsertWithWhereUniqueNestedInput;
+  delete?: WeekWhereUniqueInput[] | WeekWhereUniqueInput;
+  connect?: WeekWhereUniqueInput[] | WeekWhereUniqueInput;
+  set?: WeekWhereUniqueInput[] | WeekWhereUniqueInput;
+  disconnect?: WeekWhereUniqueInput[] | WeekWhereUniqueInput;
+  deleteMany?: WeekScalarWhereInput[] | WeekScalarWhereInput;
+  updateMany?:
+    | WeekUpdateManyWithWhereNestedInput[]
+    | WeekUpdateManyWithWhereNestedInput;
+}
+
+export interface FieldTripUpdateManyMutationInput {
+  price?: Int;
+  title?: String;
 }
 
 export interface SummerScheduleWhereInput {
@@ -1231,13 +925,259 @@ export interface SummerScheduleWhereInput {
   level_not?: Level;
   level_in?: Level[] | Level;
   level_not_in?: Level[] | Level;
-  student?: StudentWhereInput;
-  scheduleList_every?: StudentScheduleWhereInput;
-  scheduleList_some?: StudentScheduleWhereInput;
-  scheduleList_none?: StudentScheduleWhereInput;
+  weekList_every?: WeekWhereInput;
+  weekList_some?: WeekWhereInput;
+  weekList_none?: WeekWhereInput;
+  year?: Int;
+  year_not?: Int;
+  year_in?: Int[] | Int;
+  year_not_in?: Int[] | Int;
+  year_lt?: Int;
+  year_lte?: Int;
+  year_gt?: Int;
+  year_gte?: Int;
   AND?: SummerScheduleWhereInput[] | SummerScheduleWhereInput;
   OR?: SummerScheduleWhereInput[] | SummerScheduleWhereInput;
   NOT?: SummerScheduleWhereInput[] | SummerScheduleWhereInput;
+}
+
+export interface StudentCreateInput {
+  age: Int;
+  level: Level;
+  name: String;
+  scheduleList?: StudentScheduleCreateManyInput;
+}
+
+export interface WeekCreateManyInput {
+  create?: WeekCreateInput[] | WeekCreateInput;
+  connect?: WeekWhereUniqueInput[] | WeekWhereUniqueInput;
+}
+
+export interface StudentScheduleCreateManyInput {
+  create?: StudentScheduleCreateInput[] | StudentScheduleCreateInput;
+  connect?: StudentScheduleWhereUniqueInput[] | StudentScheduleWhereUniqueInput;
+}
+
+export interface StudentScheduleUpdateManyMutationInput {
+  amCare?: Boolean;
+  pmCare?: Boolean;
+  pmClass?: Boolean;
+}
+
+export interface StudentScheduleCreateInput {
+  amCare?: Boolean;
+  pmCare?: Boolean;
+  pmClass?: Boolean;
+  week: WeekCreateOneInput;
+}
+
+export interface StudentScheduleUpdateInput {
+  amCare?: Boolean;
+  pmCare?: Boolean;
+  pmClass?: Boolean;
+  week?: WeekUpdateOneRequiredInput;
+}
+
+export interface FieldTripUpsertWithWhereUniqueNestedInput {
+  where: FieldTripWhereUniqueInput;
+  update: FieldTripUpdateDataInput;
+  create: FieldTripCreateInput;
+}
+
+export interface StudentUpdateManyMutationInput {
+  age?: Int;
+  level?: Level;
+  name?: String;
+}
+
+export interface WeekCreateInput {
+  weekNumber: Int;
+  year?: Int;
+  startDate?: DateTimeInput;
+  endDate?: DateTimeInput;
+  AM_Activity?: AMActivityCreateManyInput;
+  fieldTripList?: FieldTripCreateManyInput;
+}
+
+export interface WeekSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: WeekWhereInput;
+  AND?: WeekSubscriptionWhereInput[] | WeekSubscriptionWhereInput;
+  OR?: WeekSubscriptionWhereInput[] | WeekSubscriptionWhereInput;
+  NOT?: WeekSubscriptionWhereInput[] | WeekSubscriptionWhereInput;
+}
+
+export interface AMActivityCreateManyInput {
+  create?: AMActivityCreateInput[] | AMActivityCreateInput;
+  connect?: AMActivityWhereUniqueInput[] | AMActivityWhereUniqueInput;
+}
+
+export interface StudentScheduleSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: StudentScheduleWhereInput;
+  AND?:
+    | StudentScheduleSubscriptionWhereInput[]
+    | StudentScheduleSubscriptionWhereInput;
+  OR?:
+    | StudentScheduleSubscriptionWhereInput[]
+    | StudentScheduleSubscriptionWhereInput;
+  NOT?:
+    | StudentScheduleSubscriptionWhereInput[]
+    | StudentScheduleSubscriptionWhereInput;
+}
+
+export interface FieldTripCreateManyInput {
+  create?: FieldTripCreateInput[] | FieldTripCreateInput;
+  connect?: FieldTripWhereUniqueInput[] | FieldTripWhereUniqueInput;
+}
+
+export interface AMActivitySubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: AMActivityWhereInput;
+  AND?: AMActivitySubscriptionWhereInput[] | AMActivitySubscriptionWhereInput;
+  OR?: AMActivitySubscriptionWhereInput[] | AMActivitySubscriptionWhereInput;
+  NOT?: AMActivitySubscriptionWhereInput[] | AMActivitySubscriptionWhereInput;
+}
+
+export interface StudentUpdateInput {
+  age?: Int;
+  level?: Level;
+  name?: String;
+  scheduleList?: StudentScheduleUpdateManyInput;
+}
+
+export interface WeekUpdateInput {
+  weekNumber?: Int;
+  year?: Int;
+  startDate?: DateTimeInput;
+  endDate?: DateTimeInput;
+  AM_Activity?: AMActivityUpdateManyInput;
+  fieldTripList?: FieldTripUpdateManyInput;
+}
+
+export interface StudentScheduleUpdateManyInput {
+  create?: StudentScheduleCreateInput[] | StudentScheduleCreateInput;
+  update?:
+    | StudentScheduleUpdateWithWhereUniqueNestedInput[]
+    | StudentScheduleUpdateWithWhereUniqueNestedInput;
+  upsert?:
+    | StudentScheduleUpsertWithWhereUniqueNestedInput[]
+    | StudentScheduleUpsertWithWhereUniqueNestedInput;
+  delete?: StudentScheduleWhereUniqueInput[] | StudentScheduleWhereUniqueInput;
+  connect?: StudentScheduleWhereUniqueInput[] | StudentScheduleWhereUniqueInput;
+  set?: StudentScheduleWhereUniqueInput[] | StudentScheduleWhereUniqueInput;
+  disconnect?:
+    | StudentScheduleWhereUniqueInput[]
+    | StudentScheduleWhereUniqueInput;
+  deleteMany?:
+    | StudentScheduleScalarWhereInput[]
+    | StudentScheduleScalarWhereInput;
+  updateMany?:
+    | StudentScheduleUpdateManyWithWhereNestedInput[]
+    | StudentScheduleUpdateManyWithWhereNestedInput;
+}
+
+export interface UserCreateInput {
+  name: String;
+}
+
+export type FieldTripWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export type StudentScheduleWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface StudentScheduleUpdateDataInput {
+  amCare?: Boolean;
+  pmCare?: Boolean;
+  pmClass?: Boolean;
+  week?: WeekUpdateOneRequiredInput;
+}
+
+export type SummerScheduleWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface WeekUpdateOneRequiredInput {
+  create?: WeekCreateInput;
+  update?: WeekUpdateDataInput;
+  upsert?: WeekUpsertNestedInput;
+  connect?: WeekWhereUniqueInput;
+}
+
+export interface SummerScheduleUpdateInput {
+  level?: Level;
+  weekList?: WeekUpdateManyInput;
+  year?: Int;
+}
+
+export interface WeekUpdateDataInput {
+  weekNumber?: Int;
+  year?: Int;
+  startDate?: DateTimeInput;
+  endDate?: DateTimeInput;
+  AM_Activity?: AMActivityUpdateManyInput;
+  fieldTripList?: FieldTripUpdateManyInput;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface AMActivityUpdateManyInput {
+  create?: AMActivityCreateInput[] | AMActivityCreateInput;
+  update?:
+    | AMActivityUpdateWithWhereUniqueNestedInput[]
+    | AMActivityUpdateWithWhereUniqueNestedInput;
+  upsert?:
+    | AMActivityUpsertWithWhereUniqueNestedInput[]
+    | AMActivityUpsertWithWhereUniqueNestedInput;
+  delete?: AMActivityWhereUniqueInput[] | AMActivityWhereUniqueInput;
+  connect?: AMActivityWhereUniqueInput[] | AMActivityWhereUniqueInput;
+  set?: AMActivityWhereUniqueInput[] | AMActivityWhereUniqueInput;
+  disconnect?: AMActivityWhereUniqueInput[] | AMActivityWhereUniqueInput;
+  deleteMany?: AMActivityScalarWhereInput[] | AMActivityScalarWhereInput;
+  updateMany?:
+    | AMActivityUpdateManyWithWhereNestedInput[]
+    | AMActivityUpdateManyWithWhereNestedInput;
+}
+
+export interface StudentScheduleUpdateManyDataInput {
+  amCare?: Boolean;
+  pmCare?: Boolean;
+  pmClass?: Boolean;
+}
+
+export interface AMActivityUpdateWithWhereUniqueNestedInput {
+  where: AMActivityWhereUniqueInput;
+  data: AMActivityUpdateDataInput;
+}
+
+export type StudentWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface AMActivityUpdateDataInput {
+  ages?: String;
+  desc?: String;
+  price?: Int;
+  title?: String;
+  type?: ActivityType;
+}
+
+export interface UserUpdateInput {
+  name?: String;
 }
 
 export interface AMActivityUpsertWithWhereUniqueNestedInput {
@@ -1246,41 +1186,10 @@ export interface AMActivityUpsertWithWhereUniqueNestedInput {
   create: AMActivityCreateInput;
 }
 
-export interface SummerScheduleUpdateInput {
-  level?: Level;
-  student?: StudentUpdateOneRequiredInput;
-  scheduleList?: StudentScheduleUpdateManyInput;
-}
-
-export interface FieldTripUpdateManyInput {
-  create?: FieldTripCreateInput[] | FieldTripCreateInput;
-  update?:
-    | FieldTripUpdateWithWhereUniqueNestedInput[]
-    | FieldTripUpdateWithWhereUniqueNestedInput;
-  upsert?:
-    | FieldTripUpsertWithWhereUniqueNestedInput[]
-    | FieldTripUpsertWithWhereUniqueNestedInput;
-  delete?: FieldTripWhereUniqueInput[] | FieldTripWhereUniqueInput;
-  connect?: FieldTripWhereUniqueInput[] | FieldTripWhereUniqueInput;
-  set?: FieldTripWhereUniqueInput[] | FieldTripWhereUniqueInput;
-  disconnect?: FieldTripWhereUniqueInput[] | FieldTripWhereUniqueInput;
-  deleteMany?: FieldTripScalarWhereInput[] | FieldTripScalarWhereInput;
-  updateMany?:
-    | FieldTripUpdateManyWithWhereNestedInput[]
-    | FieldTripUpdateManyWithWhereNestedInput;
-}
-
-export interface AMActivityUpdateManyDataInput {
-  ages?: String;
-  desc?: String;
-  price?: Int;
-  title?: String;
-  type?: ActivityType;
-}
-
-export interface AMActivityUpdateManyWithWhereNestedInput {
-  where: AMActivityScalarWhereInput;
-  data: AMActivityUpdateManyDataInput;
+export interface WeekUpsertWithWhereUniqueNestedInput {
+  where: WeekWhereUniqueInput;
+  update: WeekUpdateDataInput;
+  create: WeekCreateInput;
 }
 
 export interface AMActivityScalarWhereInput {
@@ -1357,22 +1266,230 @@ export interface AMActivityScalarWhereInput {
   NOT?: AMActivityScalarWhereInput[] | AMActivityScalarWhereInput;
 }
 
-export type StudentWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface StudentUpdateDataInput {
-  name?: String;
+export interface SummerScheduleCreateInput {
+  level?: Level;
+  weekList?: WeekCreateManyInput;
+  year?: Int;
 }
 
-export interface StudentScheduleUpsertWithWhereUniqueNestedInput {
-  where: StudentScheduleWhereUniqueInput;
-  update: StudentScheduleUpdateDataInput;
-  create: StudentScheduleCreateInput;
+export interface FieldTripUpdateWithWhereUniqueNestedInput {
+  where: FieldTripWhereUniqueInput;
+  data: FieldTripUpdateDataInput;
 }
 
-export interface UserUpdateInput {
+export interface FieldTripUpdateManyInput {
+  create?: FieldTripCreateInput[] | FieldTripCreateInput;
+  update?:
+    | FieldTripUpdateWithWhereUniqueNestedInput[]
+    | FieldTripUpdateWithWhereUniqueNestedInput;
+  upsert?:
+    | FieldTripUpsertWithWhereUniqueNestedInput[]
+    | FieldTripUpsertWithWhereUniqueNestedInput;
+  delete?: FieldTripWhereUniqueInput[] | FieldTripWhereUniqueInput;
+  connect?: FieldTripWhereUniqueInput[] | FieldTripWhereUniqueInput;
+  set?: FieldTripWhereUniqueInput[] | FieldTripWhereUniqueInput;
+  disconnect?: FieldTripWhereUniqueInput[] | FieldTripWhereUniqueInput;
+  deleteMany?: FieldTripScalarWhereInput[] | FieldTripScalarWhereInput;
+  updateMany?:
+    | FieldTripUpdateManyWithWhereNestedInput[]
+    | FieldTripUpdateManyWithWhereNestedInput;
+}
+
+export interface AMActivityUpdateManyDataInput {
+  ages?: String;
+  desc?: String;
+  price?: Int;
+  title?: String;
+  type?: ActivityType;
+}
+
+export interface AMActivityUpdateManyWithWhereNestedInput {
+  where: AMActivityScalarWhereInput;
+  data: AMActivityUpdateManyDataInput;
+}
+
+export interface UserWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
   name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  AND?: UserWhereInput[] | UserWhereInput;
+  OR?: UserWhereInput[] | UserWhereInput;
+  NOT?: UserWhereInput[] | UserWhereInput;
+}
+
+export interface AMActivityWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  ages?: String;
+  ages_not?: String;
+  ages_in?: String[] | String;
+  ages_not_in?: String[] | String;
+  ages_lt?: String;
+  ages_lte?: String;
+  ages_gt?: String;
+  ages_gte?: String;
+  ages_contains?: String;
+  ages_not_contains?: String;
+  ages_starts_with?: String;
+  ages_not_starts_with?: String;
+  ages_ends_with?: String;
+  ages_not_ends_with?: String;
+  desc?: String;
+  desc_not?: String;
+  desc_in?: String[] | String;
+  desc_not_in?: String[] | String;
+  desc_lt?: String;
+  desc_lte?: String;
+  desc_gt?: String;
+  desc_gte?: String;
+  desc_contains?: String;
+  desc_not_contains?: String;
+  desc_starts_with?: String;
+  desc_not_starts_with?: String;
+  desc_ends_with?: String;
+  desc_not_ends_with?: String;
+  price?: Int;
+  price_not?: Int;
+  price_in?: Int[] | Int;
+  price_not_in?: Int[] | Int;
+  price_lt?: Int;
+  price_lte?: Int;
+  price_gt?: Int;
+  price_gte?: Int;
+  title?: String;
+  title_not?: String;
+  title_in?: String[] | String;
+  title_not_in?: String[] | String;
+  title_lt?: String;
+  title_lte?: String;
+  title_gt?: String;
+  title_gte?: String;
+  title_contains?: String;
+  title_not_contains?: String;
+  title_starts_with?: String;
+  title_not_starts_with?: String;
+  title_ends_with?: String;
+  title_not_ends_with?: String;
+  type?: ActivityType;
+  type_not?: ActivityType;
+  type_in?: ActivityType[] | ActivityType;
+  type_not_in?: ActivityType[] | ActivityType;
+  AND?: AMActivityWhereInput[] | AMActivityWhereInput;
+  OR?: AMActivityWhereInput[] | AMActivityWhereInput;
+  NOT?: AMActivityWhereInput[] | AMActivityWhereInput;
+}
+
+export interface WeekUpdateManyDataInput {
+  weekNumber?: Int;
+  year?: Int;
+  startDate?: DateTimeInput;
+  endDate?: DateTimeInput;
+}
+
+export interface WeekWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  weekNumber?: Int;
+  weekNumber_not?: Int;
+  weekNumber_in?: Int[] | Int;
+  weekNumber_not_in?: Int[] | Int;
+  weekNumber_lt?: Int;
+  weekNumber_lte?: Int;
+  weekNumber_gt?: Int;
+  weekNumber_gte?: Int;
+  year?: Int;
+  year_not?: Int;
+  year_in?: Int[] | Int;
+  year_not_in?: Int[] | Int;
+  year_lt?: Int;
+  year_lte?: Int;
+  year_gt?: Int;
+  year_gte?: Int;
+  startDate?: DateTimeInput;
+  startDate_not?: DateTimeInput;
+  startDate_in?: DateTimeInput[] | DateTimeInput;
+  startDate_not_in?: DateTimeInput[] | DateTimeInput;
+  startDate_lt?: DateTimeInput;
+  startDate_lte?: DateTimeInput;
+  startDate_gt?: DateTimeInput;
+  startDate_gte?: DateTimeInput;
+  endDate?: DateTimeInput;
+  endDate_not?: DateTimeInput;
+  endDate_in?: DateTimeInput[] | DateTimeInput;
+  endDate_not_in?: DateTimeInput[] | DateTimeInput;
+  endDate_lt?: DateTimeInput;
+  endDate_lte?: DateTimeInput;
+  endDate_gt?: DateTimeInput;
+  endDate_gte?: DateTimeInput;
+  AM_Activity_every?: AMActivityWhereInput;
+  AM_Activity_some?: AMActivityWhereInput;
+  AM_Activity_none?: AMActivityWhereInput;
+  fieldTripList_every?: FieldTripWhereInput;
+  fieldTripList_some?: FieldTripWhereInput;
+  fieldTripList_none?: FieldTripWhereInput;
+  AND?: WeekWhereInput[] | WeekWhereInput;
+  OR?: WeekWhereInput[] | WeekWhereInput;
+  NOT?: WeekWhereInput[] | WeekWhereInput;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: UserWhereInput;
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
 }
 
 export interface NodeNode {
@@ -1385,7 +1502,6 @@ export interface WeekPreviousValues {
   year?: Int;
   startDate?: DateTimeOutput;
   endDate?: DateTimeOutput;
-  PM_Class?: Boolean;
 }
 
 export interface WeekPreviousValuesPromise
@@ -1396,7 +1512,6 @@ export interface WeekPreviousValuesPromise
   year: () => Promise<Int>;
   startDate: () => Promise<DateTimeOutput>;
   endDate: () => Promise<DateTimeOutput>;
-  PM_Class: () => Promise<Boolean>;
 }
 
 export interface WeekPreviousValuesSubscription
@@ -1407,23 +1522,33 @@ export interface WeekPreviousValuesSubscription
   year: () => Promise<AsyncIterator<Int>>;
   startDate: () => Promise<AsyncIterator<DateTimeOutput>>;
   endDate: () => Promise<AsyncIterator<DateTimeOutput>>;
-  PM_Class: () => Promise<AsyncIterator<Boolean>>;
 }
 
-export interface AggregateStudent {
-  count: Int;
+export interface StudentSchedule {
+  id: ID_Output;
+  amCare?: Boolean;
+  pmCare?: Boolean;
+  pmClass?: Boolean;
 }
 
-export interface AggregateStudentPromise
-  extends Promise<AggregateStudent>,
+export interface StudentSchedulePromise
+  extends Promise<StudentSchedule>,
     Fragmentable {
-  count: () => Promise<Int>;
+  id: () => Promise<ID_Output>;
+  amCare: () => Promise<Boolean>;
+  pmCare: () => Promise<Boolean>;
+  pmClass: () => Promise<Boolean>;
+  week: <T = WeekPromise>() => T;
 }
 
-export interface AggregateStudentSubscription
-  extends Promise<AsyncIterator<AggregateStudent>>,
+export interface StudentScheduleSubscription
+  extends Promise<AsyncIterator<StudentSchedule>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  amCare: () => Promise<AsyncIterator<Boolean>>;
+  pmCare: () => Promise<AsyncIterator<Boolean>>;
+  pmClass: () => Promise<AsyncIterator<Boolean>>;
+  week: <T = WeekSubscription>() => T;
 }
 
 export interface AggregateAMActivity {
@@ -1442,21 +1567,27 @@ export interface AggregateAMActivitySubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface StudentEdge {
-  node: Student;
-  cursor: String;
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
 }
 
-export interface StudentEdgePromise extends Promise<StudentEdge>, Fragmentable {
-  node: <T = StudentPromise>() => T;
-  cursor: () => Promise<String>;
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
 }
 
-export interface StudentEdgeSubscription
-  extends Promise<AsyncIterator<StudentEdge>>,
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
     Fragmentable {
-  node: <T = StudentSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface BatchPayload {
@@ -1475,25 +1606,58 @@ export interface BatchPayloadSubscription
   count: () => Promise<AsyncIterator<Long>>;
 }
 
-export interface StudentConnection {
-  pageInfo: PageInfo;
-  edges: StudentEdge[];
+export interface UserPreviousValues {
+  id: ID_Output;
+  name: String;
 }
 
-export interface StudentConnectionPromise
-  extends Promise<StudentConnection>,
+export interface UserPreviousValuesPromise
+  extends Promise<UserPreviousValues>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<StudentEdge>>() => T;
-  aggregate: <T = AggregateStudentPromise>() => T;
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
 }
 
-export interface StudentConnectionSubscription
-  extends Promise<AsyncIterator<StudentConnection>>,
+export interface UserPreviousValuesSubscription
+  extends Promise<AsyncIterator<UserPreviousValues>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<StudentEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateStudentSubscription>() => T;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AMActivityEdge {
+  node: AMActivity;
+  cursor: String;
+}
+
+export interface AMActivityEdgePromise
+  extends Promise<AMActivityEdge>,
+    Fragmentable {
+  node: <T = AMActivityPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface AMActivityEdgeSubscription
+  extends Promise<AsyncIterator<AMActivityEdge>>,
+    Fragmentable {
+  node: <T = AMActivitySubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateWeek {
+  count: Int;
+}
+
+export interface AggregateWeekPromise
+  extends Promise<AggregateWeek>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateWeekSubscription
+  extends Promise<AsyncIterator<AggregateWeek>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface WeekEdge {
@@ -1534,6 +1698,23 @@ export interface WeekConnectionSubscription
   aggregate: <T = AggregateWeekSubscription>() => T;
 }
 
+export interface UserEdge {
+  node: User;
+  cursor: String;
+}
+
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
+    Fragmentable {
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
 export interface UserSubscriptionPayload {
   mutation: MutationType;
   node: User;
@@ -1559,41 +1740,29 @@ export interface UserSubscriptionPayloadSubscription
   previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
-export interface AggregateUser {
-  count: Int;
+export interface WeekSubscriptionPayload {
+  mutation: MutationType;
+  node: Week;
+  updatedFields: String[];
+  previousValues: WeekPreviousValues;
 }
 
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
+export interface WeekSubscriptionPayloadPromise
+  extends Promise<WeekSubscriptionPayload>,
     Fragmentable {
-  count: () => Promise<Int>;
+  mutation: () => Promise<MutationType>;
+  node: <T = WeekPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = WeekPreviousValuesPromise>() => T;
 }
 
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
+export interface WeekSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<WeekSubscriptionPayload>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: UserEdge[];
-}
-
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
-}
-
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = WeekSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = WeekPreviousValuesSubscription>() => T;
 }
 
 export interface AMActivity {
@@ -1625,21 +1794,20 @@ export interface AMActivitySubscription
   type: () => Promise<AsyncIterator<ActivityType>>;
 }
 
-export interface User {
-  id: ID_Output;
-  name: String;
+export interface AggregateSummerSchedule {
+  count: Int;
 }
 
-export interface UserPromise extends Promise<User>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-}
-
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
+export interface AggregateSummerSchedulePromise
+  extends Promise<AggregateSummerSchedule>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
+  count: () => Promise<Int>;
+}
+
+export interface AggregateSummerScheduleSubscription
+  extends Promise<AsyncIterator<AggregateSummerSchedule>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface AMActivitySubscriptionPayload {
@@ -1667,23 +1835,25 @@ export interface AMActivitySubscriptionPayloadSubscription
   previousValues: <T = AMActivityPreviousValuesSubscription>() => T;
 }
 
-export interface SummerScheduleEdge {
-  node: SummerSchedule;
-  cursor: String;
+export interface SummerScheduleConnection {
+  pageInfo: PageInfo;
+  edges: SummerScheduleEdge[];
 }
 
-export interface SummerScheduleEdgePromise
-  extends Promise<SummerScheduleEdge>,
+export interface SummerScheduleConnectionPromise
+  extends Promise<SummerScheduleConnection>,
     Fragmentable {
-  node: <T = SummerSchedulePromise>() => T;
-  cursor: () => Promise<String>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<SummerScheduleEdge>>() => T;
+  aggregate: <T = AggregateSummerSchedulePromise>() => T;
 }
 
-export interface SummerScheduleEdgeSubscription
-  extends Promise<AsyncIterator<SummerScheduleEdge>>,
+export interface SummerScheduleConnectionSubscription
+  extends Promise<AsyncIterator<SummerScheduleConnection>>,
     Fragmentable {
-  node: <T = SummerScheduleSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<SummerScheduleEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateSummerScheduleSubscription>() => T;
 }
 
 export interface AMActivityPreviousValues {
@@ -1717,58 +1887,112 @@ export interface AMActivityPreviousValuesSubscription
   type: () => Promise<AsyncIterator<ActivityType>>;
 }
 
-export interface AMActivityConnection {
-  pageInfo: PageInfo;
-  edges: AMActivityEdge[];
+export interface SummerSchedule {
+  id: ID_Output;
+  level: Level;
+  year?: Int;
 }
 
-export interface AMActivityConnectionPromise
-  extends Promise<AMActivityConnection>,
+export interface SummerSchedulePromise
+  extends Promise<SummerSchedule>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<AMActivityEdge>>() => T;
-  aggregate: <T = AggregateAMActivityPromise>() => T;
+  id: () => Promise<ID_Output>;
+  level: () => Promise<Level>;
+  weekList: <T = FragmentableArray<Week>>(
+    args?: {
+      where?: WeekWhereInput;
+      orderBy?: WeekOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  year: () => Promise<Int>;
 }
 
-export interface AMActivityConnectionSubscription
-  extends Promise<AsyncIterator<AMActivityConnection>>,
+export interface SummerScheduleSubscription
+  extends Promise<AsyncIterator<SummerSchedule>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<AMActivityEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateAMActivitySubscription>() => T;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  level: () => Promise<AsyncIterator<Level>>;
+  weekList: <T = Promise<AsyncIterator<WeekSubscription>>>(
+    args?: {
+      where?: WeekWhereInput;
+      orderBy?: WeekOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
+  year: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface Student {
   id: ID_Output;
+  age: Int;
+  level: Level;
   name: String;
 }
 
 export interface StudentPromise extends Promise<Student>, Fragmentable {
   id: () => Promise<ID_Output>;
+  age: () => Promise<Int>;
+  level: () => Promise<Level>;
   name: () => Promise<String>;
+  scheduleList: <T = FragmentableArray<StudentSchedule>>(
+    args?: {
+      where?: StudentScheduleWhereInput;
+      orderBy?: StudentScheduleOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
 }
 
 export interface StudentSubscription
   extends Promise<AsyncIterator<Student>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  age: () => Promise<AsyncIterator<Int>>;
+  level: () => Promise<AsyncIterator<Level>>;
   name: () => Promise<AsyncIterator<String>>;
+  scheduleList: <T = Promise<AsyncIterator<StudentScheduleSubscription>>>(
+    args?: {
+      where?: StudentScheduleWhereInput;
+      orderBy?: StudentScheduleOrderByInput;
+      skip?: Int;
+      after?: String;
+      before?: String;
+      first?: Int;
+      last?: Int;
+    }
+  ) => T;
 }
 
-export interface AggregateStudentSchedule {
-  count: Int;
+export interface StudentScheduleEdge {
+  node: StudentSchedule;
+  cursor: String;
 }
 
-export interface AggregateStudentSchedulePromise
-  extends Promise<AggregateStudentSchedule>,
+export interface StudentScheduleEdgePromise
+  extends Promise<StudentScheduleEdge>,
     Fragmentable {
-  count: () => Promise<Int>;
+  node: <T = StudentSchedulePromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface AggregateStudentScheduleSubscription
-  extends Promise<AsyncIterator<AggregateStudentSchedule>>,
+export interface StudentScheduleEdgeSubscription
+  extends Promise<AsyncIterator<StudentScheduleEdge>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  node: <T = StudentScheduleSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface FieldTripSubscriptionPayload {
@@ -1796,25 +2020,20 @@ export interface FieldTripSubscriptionPayloadSubscription
   previousValues: <T = FieldTripPreviousValuesSubscription>() => T;
 }
 
-export interface StudentScheduleConnection {
-  pageInfo: PageInfo;
-  edges: StudentScheduleEdge[];
+export interface AggregateStudent {
+  count: Int;
 }
 
-export interface StudentScheduleConnectionPromise
-  extends Promise<StudentScheduleConnection>,
+export interface AggregateStudentPromise
+  extends Promise<AggregateStudent>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<StudentScheduleEdge>>() => T;
-  aggregate: <T = AggregateStudentSchedulePromise>() => T;
+  count: () => Promise<Int>;
 }
 
-export interface StudentScheduleConnectionSubscription
-  extends Promise<AsyncIterator<StudentScheduleConnection>>,
+export interface AggregateStudentSubscription
+  extends Promise<AsyncIterator<AggregateStudent>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<StudentScheduleEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateStudentScheduleSubscription>() => T;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface FieldTripPreviousValues {
@@ -1839,24 +2058,25 @@ export interface FieldTripPreviousValuesSubscription
   title: () => Promise<AsyncIterator<String>>;
 }
 
-export interface FieldTrip {
-  id: ID_Output;
-  price: Int;
-  title: String;
+export interface StudentConnection {
+  pageInfo: PageInfo;
+  edges: StudentEdge[];
 }
 
-export interface FieldTripPromise extends Promise<FieldTrip>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  price: () => Promise<Int>;
-  title: () => Promise<String>;
-}
-
-export interface FieldTripSubscription
-  extends Promise<AsyncIterator<FieldTrip>>,
+export interface StudentConnectionPromise
+  extends Promise<StudentConnection>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  price: () => Promise<AsyncIterator<Int>>;
-  title: () => Promise<AsyncIterator<String>>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<StudentEdge>>() => T;
+  aggregate: <T = AggregateStudentPromise>() => T;
+}
+
+export interface StudentConnectionSubscription
+  extends Promise<AsyncIterator<StudentConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<StudentEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateStudentSubscription>() => T;
 }
 
 export interface AggregateFieldTrip {
@@ -1875,228 +2095,12 @@ export interface AggregateFieldTripSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface StudentSchedule {
-  id: ID_Output;
-  amCare?: Boolean;
-  pmCare?: Boolean;
-}
-
-export interface StudentSchedulePromise
-  extends Promise<StudentSchedule>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  amCare: () => Promise<Boolean>;
-  pmCare: () => Promise<Boolean>;
-  week: <T = WeekPromise>() => T;
-}
-
-export interface StudentScheduleSubscription
-  extends Promise<AsyncIterator<StudentSchedule>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  amCare: () => Promise<AsyncIterator<Boolean>>;
-  pmCare: () => Promise<AsyncIterator<Boolean>>;
-  week: <T = WeekSubscription>() => T;
-}
-
-export interface StudentSubscriptionPayload {
-  mutation: MutationType;
-  node: Student;
-  updatedFields: String[];
-  previousValues: StudentPreviousValues;
-}
-
-export interface StudentSubscriptionPayloadPromise
-  extends Promise<StudentSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = StudentPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = StudentPreviousValuesPromise>() => T;
-}
-
-export interface StudentSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<StudentSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = StudentSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = StudentPreviousValuesSubscription>() => T;
-}
-
-export interface AggregateWeek {
-  count: Int;
-}
-
-export interface AggregateWeekPromise
-  extends Promise<AggregateWeek>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateWeekSubscription
-  extends Promise<AsyncIterator<AggregateWeek>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface StudentPreviousValues {
-  id: ID_Output;
-  name: String;
-}
-
-export interface StudentPreviousValuesPromise
-  extends Promise<StudentPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-}
-
-export interface StudentPreviousValuesSubscription
-  extends Promise<AsyncIterator<StudentPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-}
-
-export interface WeekSubscriptionPayload {
-  mutation: MutationType;
-  node: Week;
-  updatedFields: String[];
-  previousValues: WeekPreviousValues;
-}
-
-export interface WeekSubscriptionPayloadPromise
-  extends Promise<WeekSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = WeekPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = WeekPreviousValuesPromise>() => T;
-}
-
-export interface WeekSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<WeekSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = WeekSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = WeekPreviousValuesSubscription>() => T;
-}
-
-export interface FieldTripEdge {
-  node: FieldTrip;
-  cursor: String;
-}
-
-export interface FieldTripEdgePromise
-  extends Promise<FieldTripEdge>,
-    Fragmentable {
-  node: <T = FieldTripPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface FieldTripEdgeSubscription
-  extends Promise<AsyncIterator<FieldTripEdge>>,
-    Fragmentable {
-  node: <T = FieldTripSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface SummerScheduleConnection {
-  pageInfo: PageInfo;
-  edges: SummerScheduleEdge[];
-}
-
-export interface SummerScheduleConnectionPromise
-  extends Promise<SummerScheduleConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<SummerScheduleEdge>>() => T;
-  aggregate: <T = AggregateSummerSchedulePromise>() => T;
-}
-
-export interface SummerScheduleConnectionSubscription
-  extends Promise<AsyncIterator<SummerScheduleConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<SummerScheduleEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateSummerScheduleSubscription>() => T;
-}
-
-export interface StudentScheduleSubscriptionPayload {
-  mutation: MutationType;
-  node: StudentSchedule;
-  updatedFields: String[];
-  previousValues: StudentSchedulePreviousValues;
-}
-
-export interface StudentScheduleSubscriptionPayloadPromise
-  extends Promise<StudentScheduleSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = StudentSchedulePromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = StudentSchedulePreviousValuesPromise>() => T;
-}
-
-export interface StudentScheduleSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<StudentScheduleSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = StudentScheduleSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = StudentSchedulePreviousValuesSubscription>() => T;
-}
-
-export interface StudentScheduleEdge {
-  node: StudentSchedule;
-  cursor: String;
-}
-
-export interface StudentScheduleEdgePromise
-  extends Promise<StudentScheduleEdge>,
-    Fragmentable {
-  node: <T = StudentSchedulePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface StudentScheduleEdgeSubscription
-  extends Promise<AsyncIterator<StudentScheduleEdge>>,
-    Fragmentable {
-  node: <T = StudentScheduleSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface StudentSchedulePreviousValues {
-  id: ID_Output;
-  amCare?: Boolean;
-  pmCare?: Boolean;
-}
-
-export interface StudentSchedulePreviousValuesPromise
-  extends Promise<StudentSchedulePreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  amCare: () => Promise<Boolean>;
-  pmCare: () => Promise<Boolean>;
-}
-
-export interface StudentSchedulePreviousValuesSubscription
-  extends Promise<AsyncIterator<StudentSchedulePreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  amCare: () => Promise<AsyncIterator<Boolean>>;
-  pmCare: () => Promise<AsyncIterator<Boolean>>;
-}
-
 export interface Week {
   id: ID_Output;
   weekNumber: Int;
   year?: Int;
   startDate?: DateTimeOutput;
   endDate?: DateTimeOutput;
-  PM_Class?: Boolean;
 }
 
 export interface WeekPromise extends Promise<Week>, Fragmentable {
@@ -2116,7 +2120,6 @@ export interface WeekPromise extends Promise<Week>, Fragmentable {
       last?: Int;
     }
   ) => T;
-  PM_Class: () => Promise<Boolean>;
   fieldTripList: <T = FragmentableArray<FieldTrip>>(
     args?: {
       where?: FieldTripWhereInput;
@@ -2149,7 +2152,6 @@ export interface WeekSubscription
       last?: Int;
     }
   ) => T;
-  PM_Class: () => Promise<AsyncIterator<Boolean>>;
   fieldTripList: <T = Promise<AsyncIterator<FieldTripSubscription>>>(
     args?: {
       where?: FieldTripWhereInput;
@@ -2163,28 +2165,193 @@ export interface WeekSubscription
   ) => T;
 }
 
-export interface AMActivityEdge {
-  node: AMActivity;
+export interface StudentSubscriptionPayload {
+  mutation: MutationType;
+  node: Student;
+  updatedFields: String[];
+  previousValues: StudentPreviousValues;
+}
+
+export interface StudentSubscriptionPayloadPromise
+  extends Promise<StudentSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = StudentPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = StudentPreviousValuesPromise>() => T;
+}
+
+export interface StudentSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<StudentSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = StudentSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = StudentPreviousValuesSubscription>() => T;
+}
+
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
+}
+
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
+}
+
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
+}
+
+export interface StudentPreviousValues {
+  id: ID_Output;
+  age: Int;
+  level: Level;
+  name: String;
+}
+
+export interface StudentPreviousValuesPromise
+  extends Promise<StudentPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  age: () => Promise<Int>;
+  level: () => Promise<Level>;
+  name: () => Promise<String>;
+}
+
+export interface StudentPreviousValuesSubscription
+  extends Promise<AsyncIterator<StudentPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  age: () => Promise<AsyncIterator<Int>>;
+  level: () => Promise<AsyncIterator<Level>>;
+  name: () => Promise<AsyncIterator<String>>;
+}
+
+export interface SummerScheduleEdge {
+  node: SummerSchedule;
   cursor: String;
 }
 
-export interface AMActivityEdgePromise
-  extends Promise<AMActivityEdge>,
+export interface SummerScheduleEdgePromise
+  extends Promise<SummerScheduleEdge>,
     Fragmentable {
-  node: <T = AMActivityPromise>() => T;
+  node: <T = SummerSchedulePromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface AMActivityEdgeSubscription
-  extends Promise<AsyncIterator<AMActivityEdge>>,
+export interface SummerScheduleEdgeSubscription
+  extends Promise<AsyncIterator<SummerScheduleEdge>>,
     Fragmentable {
-  node: <T = AMActivitySubscription>() => T;
+  node: <T = SummerScheduleSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface FieldTripEdge {
+  node: FieldTrip;
+  cursor: String;
+}
+
+export interface FieldTripEdgePromise
+  extends Promise<FieldTripEdge>,
+    Fragmentable {
+  node: <T = FieldTripPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface FieldTripEdgeSubscription
+  extends Promise<AsyncIterator<FieldTripEdge>>,
+    Fragmentable {
+  node: <T = FieldTripSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateStudentSchedule {
+  count: Int;
+}
+
+export interface AggregateStudentSchedulePromise
+  extends Promise<AggregateStudentSchedule>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateStudentScheduleSubscription
+  extends Promise<AsyncIterator<AggregateStudentSchedule>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface StudentScheduleSubscriptionPayload {
+  mutation: MutationType;
+  node: StudentSchedule;
+  updatedFields: String[];
+  previousValues: StudentSchedulePreviousValues;
+}
+
+export interface StudentScheduleSubscriptionPayloadPromise
+  extends Promise<StudentScheduleSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = StudentSchedulePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = StudentSchedulePreviousValuesPromise>() => T;
+}
+
+export interface StudentScheduleSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<StudentScheduleSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = StudentScheduleSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = StudentSchedulePreviousValuesSubscription>() => T;
+}
+
+export interface StudentEdge {
+  node: Student;
+  cursor: String;
+}
+
+export interface StudentEdgePromise extends Promise<StudentEdge>, Fragmentable {
+  node: <T = StudentPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface StudentEdgeSubscription
+  extends Promise<AsyncIterator<StudentEdge>>,
+    Fragmentable {
+  node: <T = StudentSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface SummerSchedulePreviousValues {
   id: ID_Output;
   level: Level;
+  year?: Int;
 }
 
 export interface SummerSchedulePreviousValuesPromise
@@ -2192,6 +2359,7 @@ export interface SummerSchedulePreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   level: () => Promise<Level>;
+  year: () => Promise<Int>;
 }
 
 export interface SummerSchedulePreviousValuesSubscription
@@ -2199,6 +2367,7 @@ export interface SummerSchedulePreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   level: () => Promise<AsyncIterator<Level>>;
+  year: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface SummerScheduleSubscriptionPayload {
@@ -2247,128 +2416,119 @@ export interface FieldTripConnectionSubscription
   aggregate: <T = AggregateFieldTripSubscription>() => T;
 }
 
-export interface UserPreviousValues {
+export interface StudentSchedulePreviousValues {
+  id: ID_Output;
+  amCare?: Boolean;
+  pmCare?: Boolean;
+  pmClass?: Boolean;
+}
+
+export interface StudentSchedulePreviousValuesPromise
+  extends Promise<StudentSchedulePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  amCare: () => Promise<Boolean>;
+  pmCare: () => Promise<Boolean>;
+  pmClass: () => Promise<Boolean>;
+}
+
+export interface StudentSchedulePreviousValuesSubscription
+  extends Promise<AsyncIterator<StudentSchedulePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  amCare: () => Promise<AsyncIterator<Boolean>>;
+  pmCare: () => Promise<AsyncIterator<Boolean>>;
+  pmClass: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface User {
   id: ID_Output;
   name: String;
 }
 
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
-    Fragmentable {
+export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
 }
 
-export interface UserPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserPreviousValues>>,
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
 }
 
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
+export interface AMActivityConnection {
+  pageInfo: PageInfo;
+  edges: AMActivityEdge[];
 }
 
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
+export interface AMActivityConnectionPromise
+  extends Promise<AMActivityConnection>,
     Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<AMActivityEdge>>() => T;
+  aggregate: <T = AggregateAMActivityPromise>() => T;
 }
 
-export interface SummerSchedule {
+export interface AMActivityConnectionSubscription
+  extends Promise<AsyncIterator<AMActivityConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<AMActivityEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateAMActivitySubscription>() => T;
+}
+
+export interface StudentScheduleConnection {
+  pageInfo: PageInfo;
+  edges: StudentScheduleEdge[];
+}
+
+export interface StudentScheduleConnectionPromise
+  extends Promise<StudentScheduleConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<StudentScheduleEdge>>() => T;
+  aggregate: <T = AggregateStudentSchedulePromise>() => T;
+}
+
+export interface StudentScheduleConnectionSubscription
+  extends Promise<AsyncIterator<StudentScheduleConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<StudentScheduleEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateStudentScheduleSubscription>() => T;
+}
+
+export interface FieldTrip {
   id: ID_Output;
-  level: Level;
+  price: Int;
+  title: String;
 }
 
-export interface SummerSchedulePromise
-  extends Promise<SummerSchedule>,
-    Fragmentable {
+export interface FieldTripPromise extends Promise<FieldTrip>, Fragmentable {
   id: () => Promise<ID_Output>;
-  level: () => Promise<Level>;
-  student: <T = StudentPromise>() => T;
-  scheduleList: <T = FragmentableArray<StudentSchedule>>(
-    args?: {
-      where?: StudentScheduleWhereInput;
-      orderBy?: StudentScheduleOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
+  price: () => Promise<Int>;
+  title: () => Promise<String>;
 }
 
-export interface SummerScheduleSubscription
-  extends Promise<AsyncIterator<SummerSchedule>>,
+export interface FieldTripSubscription
+  extends Promise<AsyncIterator<FieldTrip>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  level: () => Promise<AsyncIterator<Level>>;
-  student: <T = StudentSubscription>() => T;
-  scheduleList: <T = Promise<AsyncIterator<StudentScheduleSubscription>>>(
-    args?: {
-      where?: StudentScheduleWhereInput;
-      orderBy?: StudentScheduleOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => T;
-}
-
-export interface AggregateSummerSchedule {
-  count: Int;
-}
-
-export interface AggregateSummerSchedulePromise
-  extends Promise<AggregateSummerSchedule>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateSummerScheduleSubscription
-  extends Promise<AsyncIterator<AggregateSummerSchedule>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface UserEdge {
-  node: User;
-  cursor: String;
-}
-
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
-    Fragmentable {
-  node: <T = UserSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  price: () => Promise<AsyncIterator<Int>>;
+  title: () => Promise<AsyncIterator<String>>;
 }
 
 /*
-The `Boolean` scalar type represents `true` or `false`.
+DateTime scalar input type, allowing Date
 */
-export type Boolean = boolean;
+export type DateTimeInput = Date | string;
+
+/*
+DateTime scalar output type, which is always a string
+*/
+export type DateTimeOutput = string;
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
@@ -2386,17 +2546,12 @@ The `Int` scalar type represents non-fractional signed whole numeric values. Int
 */
 export type Int = number;
 
-/*
-DateTime scalar input type, allowing Date
-*/
-export type DateTimeInput = Date | string;
-
-/*
-DateTime scalar output type, which is always a string
-*/
-export type DateTimeOutput = string;
-
 export type Long = string;
+
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
 
 /**
  * Model Metadata

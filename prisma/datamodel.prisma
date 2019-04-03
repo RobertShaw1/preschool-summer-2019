@@ -6,19 +6,23 @@ type User {
 type SummerSchedule {
   id: ID! @unique
   level: Level! @default(value: "PRESCHOOL")
-  student: Student!
-  scheduleList: [StudentSchedule!]!
+  weekList: [Week!]!
+  year: Int @default(value: "2019")
 }
 
 type Student {
   id: ID! @unique
+  age: Int!
+  level: Level!
   name: String!
+  scheduleList: [StudentSchedule!]!
 }
 
 type StudentSchedule {
   id: ID! @unique
   amCare: Boolean @default(value: "false")
   pmCare: Boolean @default(value: "false")
+  pmClass: Boolean @default(value: "false")
   week: Week!
 }
 
@@ -28,9 +32,8 @@ type Week {
   year: Int @default(value: "2019")
   startDate: DateTime
   endDate: DateTime
-  AM_Activity: [AMActivity]!
-  PM_Class: Boolean @default(value: "false")
-  fieldTripList: [FieldTrip]!
+  AM_Activity: [AMActivity!]!
+  fieldTripList: [FieldTrip!]!
 }
 
 type AMActivity {

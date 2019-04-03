@@ -630,7 +630,10 @@ type Query {
 
 type Student {
   id: ID!
+  age: Int!
+  level: Level!
   name: String!
+  scheduleList(where: StudentScheduleWhereInput, orderBy: StudentScheduleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StudentSchedule!]
 }
 
 type StudentConnection {
@@ -640,12 +643,10 @@ type StudentConnection {
 }
 
 input StudentCreateInput {
+  age: Int!
+  level: Level!
   name: String!
-}
-
-input StudentCreateOneInput {
-  create: StudentCreateInput
-  connect: StudentWhereUniqueInput
+  scheduleList: StudentScheduleCreateManyInput
 }
 
 type StudentEdge {
@@ -656,6 +657,10 @@ type StudentEdge {
 enum StudentOrderByInput {
   id_ASC
   id_DESC
+  age_ASC
+  age_DESC
+  level_ASC
+  level_DESC
   name_ASC
   name_DESC
   createdAt_ASC
@@ -666,6 +671,8 @@ enum StudentOrderByInput {
 
 type StudentPreviousValues {
   id: ID!
+  age: Int!
+  level: Level!
   name: String!
 }
 
@@ -673,6 +680,7 @@ type StudentSchedule {
   id: ID!
   amCare: Boolean
   pmCare: Boolean
+  pmClass: Boolean
   week: Week!
 }
 
@@ -685,6 +693,7 @@ type StudentScheduleConnection {
 input StudentScheduleCreateInput {
   amCare: Boolean
   pmCare: Boolean
+  pmClass: Boolean
   week: WeekCreateOneInput!
 }
 
@@ -705,6 +714,8 @@ enum StudentScheduleOrderByInput {
   amCare_DESC
   pmCare_ASC
   pmCare_DESC
+  pmClass_ASC
+  pmClass_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -715,6 +726,7 @@ type StudentSchedulePreviousValues {
   id: ID!
   amCare: Boolean
   pmCare: Boolean
+  pmClass: Boolean
 }
 
 input StudentScheduleScalarWhereInput {
@@ -736,6 +748,8 @@ input StudentScheduleScalarWhereInput {
   amCare_not: Boolean
   pmCare: Boolean
   pmCare_not: Boolean
+  pmClass: Boolean
+  pmClass_not: Boolean
   AND: [StudentScheduleScalarWhereInput!]
   OR: [StudentScheduleScalarWhereInput!]
   NOT: [StudentScheduleScalarWhereInput!]
@@ -762,18 +776,21 @@ input StudentScheduleSubscriptionWhereInput {
 input StudentScheduleUpdateDataInput {
   amCare: Boolean
   pmCare: Boolean
+  pmClass: Boolean
   week: WeekUpdateOneRequiredInput
 }
 
 input StudentScheduleUpdateInput {
   amCare: Boolean
   pmCare: Boolean
+  pmClass: Boolean
   week: WeekUpdateOneRequiredInput
 }
 
 input StudentScheduleUpdateManyDataInput {
   amCare: Boolean
   pmCare: Boolean
+  pmClass: Boolean
 }
 
 input StudentScheduleUpdateManyInput {
@@ -791,6 +808,7 @@ input StudentScheduleUpdateManyInput {
 input StudentScheduleUpdateManyMutationInput {
   amCare: Boolean
   pmCare: Boolean
+  pmClass: Boolean
 }
 
 input StudentScheduleUpdateManyWithWhereNestedInput {
@@ -828,6 +846,8 @@ input StudentScheduleWhereInput {
   amCare_not: Boolean
   pmCare: Boolean
   pmCare_not: Boolean
+  pmClass: Boolean
+  pmClass_not: Boolean
   week: WeekWhereInput
   AND: [StudentScheduleWhereInput!]
   OR: [StudentScheduleWhereInput!]
@@ -856,28 +876,17 @@ input StudentSubscriptionWhereInput {
   NOT: [StudentSubscriptionWhereInput!]
 }
 
-input StudentUpdateDataInput {
-  name: String
-}
-
 input StudentUpdateInput {
+  age: Int
+  level: Level
   name: String
+  scheduleList: StudentScheduleUpdateManyInput
 }
 
 input StudentUpdateManyMutationInput {
+  age: Int
+  level: Level
   name: String
-}
-
-input StudentUpdateOneRequiredInput {
-  create: StudentCreateInput
-  update: StudentUpdateDataInput
-  upsert: StudentUpsertNestedInput
-  connect: StudentWhereUniqueInput
-}
-
-input StudentUpsertNestedInput {
-  update: StudentUpdateDataInput!
-  create: StudentCreateInput!
 }
 
 input StudentWhereInput {
@@ -895,6 +904,18 @@ input StudentWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  age: Int
+  age_not: Int
+  age_in: [Int!]
+  age_not_in: [Int!]
+  age_lt: Int
+  age_lte: Int
+  age_gt: Int
+  age_gte: Int
+  level: Level
+  level_not: Level
+  level_in: [Level!]
+  level_not_in: [Level!]
   name: String
   name_not: String
   name_in: [String!]
@@ -909,6 +930,9 @@ input StudentWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  scheduleList_every: StudentScheduleWhereInput
+  scheduleList_some: StudentScheduleWhereInput
+  scheduleList_none: StudentScheduleWhereInput
   AND: [StudentWhereInput!]
   OR: [StudentWhereInput!]
   NOT: [StudentWhereInput!]
@@ -931,8 +955,8 @@ type Subscription {
 type SummerSchedule {
   id: ID!
   level: Level!
-  student: Student!
-  scheduleList(where: StudentScheduleWhereInput, orderBy: StudentScheduleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [StudentSchedule!]
+  weekList(where: WeekWhereInput, orderBy: WeekOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Week!]
+  year: Int
 }
 
 type SummerScheduleConnection {
@@ -943,8 +967,8 @@ type SummerScheduleConnection {
 
 input SummerScheduleCreateInput {
   level: Level
-  student: StudentCreateOneInput!
-  scheduleList: StudentScheduleCreateManyInput
+  weekList: WeekCreateManyInput
+  year: Int
 }
 
 type SummerScheduleEdge {
@@ -957,6 +981,8 @@ enum SummerScheduleOrderByInput {
   id_DESC
   level_ASC
   level_DESC
+  year_ASC
+  year_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -966,6 +992,7 @@ enum SummerScheduleOrderByInput {
 type SummerSchedulePreviousValues {
   id: ID!
   level: Level!
+  year: Int
 }
 
 type SummerScheduleSubscriptionPayload {
@@ -988,12 +1015,13 @@ input SummerScheduleSubscriptionWhereInput {
 
 input SummerScheduleUpdateInput {
   level: Level
-  student: StudentUpdateOneRequiredInput
-  scheduleList: StudentScheduleUpdateManyInput
+  weekList: WeekUpdateManyInput
+  year: Int
 }
 
 input SummerScheduleUpdateManyMutationInput {
   level: Level
+  year: Int
 }
 
 input SummerScheduleWhereInput {
@@ -1015,10 +1043,17 @@ input SummerScheduleWhereInput {
   level_not: Level
   level_in: [Level!]
   level_not_in: [Level!]
-  student: StudentWhereInput
-  scheduleList_every: StudentScheduleWhereInput
-  scheduleList_some: StudentScheduleWhereInput
-  scheduleList_none: StudentScheduleWhereInput
+  weekList_every: WeekWhereInput
+  weekList_some: WeekWhereInput
+  weekList_none: WeekWhereInput
+  year: Int
+  year_not: Int
+  year_in: [Int!]
+  year_not_in: [Int!]
+  year_lt: Int
+  year_lte: Int
+  year_gt: Int
+  year_gte: Int
   AND: [SummerScheduleWhereInput!]
   OR: [SummerScheduleWhereInput!]
   NOT: [SummerScheduleWhereInput!]
@@ -1135,7 +1170,6 @@ type Week {
   startDate: DateTime
   endDate: DateTime
   AM_Activity(where: AMActivityWhereInput, orderBy: AMActivityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AMActivity!]
-  PM_Class: Boolean
   fieldTripList(where: FieldTripWhereInput, orderBy: FieldTripOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FieldTrip!]
 }
 
@@ -1151,8 +1185,12 @@ input WeekCreateInput {
   startDate: DateTime
   endDate: DateTime
   AM_Activity: AMActivityCreateManyInput
-  PM_Class: Boolean
   fieldTripList: FieldTripCreateManyInput
+}
+
+input WeekCreateManyInput {
+  create: [WeekCreateInput!]
+  connect: [WeekWhereUniqueInput!]
 }
 
 input WeekCreateOneInput {
@@ -1176,8 +1214,6 @@ enum WeekOrderByInput {
   startDate_DESC
   endDate_ASC
   endDate_DESC
-  PM_Class_ASC
-  PM_Class_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -1190,7 +1226,58 @@ type WeekPreviousValues {
   year: Int
   startDate: DateTime
   endDate: DateTime
-  PM_Class: Boolean
+}
+
+input WeekScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  weekNumber: Int
+  weekNumber_not: Int
+  weekNumber_in: [Int!]
+  weekNumber_not_in: [Int!]
+  weekNumber_lt: Int
+  weekNumber_lte: Int
+  weekNumber_gt: Int
+  weekNumber_gte: Int
+  year: Int
+  year_not: Int
+  year_in: [Int!]
+  year_not_in: [Int!]
+  year_lt: Int
+  year_lte: Int
+  year_gt: Int
+  year_gte: Int
+  startDate: DateTime
+  startDate_not: DateTime
+  startDate_in: [DateTime!]
+  startDate_not_in: [DateTime!]
+  startDate_lt: DateTime
+  startDate_lte: DateTime
+  startDate_gt: DateTime
+  startDate_gte: DateTime
+  endDate: DateTime
+  endDate_not: DateTime
+  endDate_in: [DateTime!]
+  endDate_not_in: [DateTime!]
+  endDate_lt: DateTime
+  endDate_lte: DateTime
+  endDate_gt: DateTime
+  endDate_gte: DateTime
+  AND: [WeekScalarWhereInput!]
+  OR: [WeekScalarWhereInput!]
+  NOT: [WeekScalarWhereInput!]
 }
 
 type WeekSubscriptionPayload {
@@ -1217,7 +1304,6 @@ input WeekUpdateDataInput {
   startDate: DateTime
   endDate: DateTime
   AM_Activity: AMActivityUpdateManyInput
-  PM_Class: Boolean
   fieldTripList: FieldTripUpdateManyInput
 }
 
@@ -1227,8 +1313,26 @@ input WeekUpdateInput {
   startDate: DateTime
   endDate: DateTime
   AM_Activity: AMActivityUpdateManyInput
-  PM_Class: Boolean
   fieldTripList: FieldTripUpdateManyInput
+}
+
+input WeekUpdateManyDataInput {
+  weekNumber: Int
+  year: Int
+  startDate: DateTime
+  endDate: DateTime
+}
+
+input WeekUpdateManyInput {
+  create: [WeekCreateInput!]
+  update: [WeekUpdateWithWhereUniqueNestedInput!]
+  upsert: [WeekUpsertWithWhereUniqueNestedInput!]
+  delete: [WeekWhereUniqueInput!]
+  connect: [WeekWhereUniqueInput!]
+  set: [WeekWhereUniqueInput!]
+  disconnect: [WeekWhereUniqueInput!]
+  deleteMany: [WeekScalarWhereInput!]
+  updateMany: [WeekUpdateManyWithWhereNestedInput!]
 }
 
 input WeekUpdateManyMutationInput {
@@ -1236,7 +1340,11 @@ input WeekUpdateManyMutationInput {
   year: Int
   startDate: DateTime
   endDate: DateTime
-  PM_Class: Boolean
+}
+
+input WeekUpdateManyWithWhereNestedInput {
+  where: WeekScalarWhereInput!
+  data: WeekUpdateManyDataInput!
 }
 
 input WeekUpdateOneRequiredInput {
@@ -1246,7 +1354,18 @@ input WeekUpdateOneRequiredInput {
   connect: WeekWhereUniqueInput
 }
 
+input WeekUpdateWithWhereUniqueNestedInput {
+  where: WeekWhereUniqueInput!
+  data: WeekUpdateDataInput!
+}
+
 input WeekUpsertNestedInput {
+  update: WeekUpdateDataInput!
+  create: WeekCreateInput!
+}
+
+input WeekUpsertWithWhereUniqueNestedInput {
+  where: WeekWhereUniqueInput!
   update: WeekUpdateDataInput!
   create: WeekCreateInput!
 }
@@ -1301,8 +1420,6 @@ input WeekWhereInput {
   AM_Activity_every: AMActivityWhereInput
   AM_Activity_some: AMActivityWhereInput
   AM_Activity_none: AMActivityWhereInput
-  PM_Class: Boolean
-  PM_Class_not: Boolean
   fieldTripList_every: FieldTripWhereInput
   fieldTripList_some: FieldTripWhereInput
   fieldTripList_none: FieldTripWhereInput
